@@ -14,7 +14,7 @@ import styles from "../../styles/SignInUpForm.module.css";
 import btnStyles from "../../styles/Button.module.css";
 import appStyles from "../../App.module.css";
 import Market from '../../assets/signInMarketplace.jpg'
-import { useSetCurrentUser } from "../../contexts/CurrentUserProvider";
+import { useSetCurrentUser } from "../../contexts/CurrentUserContext";
 
 function SignInForm() {
 
@@ -57,7 +57,7 @@ function SignInForm() {
     <Form onSubmit={handleSubmit}>
          <Form.Group controlId="username">
            <Form.Label>Username</Form.Label>
-           <Form.Control type="text" placeholder="Insert your unsername" name='username' value={username} onChange={handleChange} />
+           <Form.Control type="text" placeholder="Insert your username" name='username' value={username} onChange={handleChange} />
          </Form.Group>
          {errors.username?.map((message, idx) => (<Alert variant='danger' key={idx}>{message}</Alert>))}
 

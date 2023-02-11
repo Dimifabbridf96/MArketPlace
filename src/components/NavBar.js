@@ -3,28 +3,48 @@ import styles from '../styles/NavBar.module.css'
 import {Container, Nav, Navbar} from 'react-bootstrap';
 import icon from '../assets/marketplace-icon.png'
 import { NavLink } from 'react-router-dom';
-import { useCurrentUser } from '../contexts/CurrentUserProvider';
+import { useCurrentUser, useSetCurrentUser } from '../contexts/CurrentUserContext';
+import Avatar from './Avatar';
+import axios from 'axios';
 
 const NavBar = () => {
   const currentUser = useCurrentUser();
+  const setCurrentUser = useSetCurrentUser();
+
+  const HandleSignOut = async () =>{
+    try{
+      await axios.post('dj-rest-auth/logout/')
+      setCurrentUser(null);
+    }catch(err){
+      console.log(err)
+
+    }
+  }
+
+  const addProductIcon = (
+    <NavLink  className={styles.NavLink} activeClassName={styles.Active}to='/product/create' ><i className="fa-solid fa-cart-plus"></i> Add Product </NavLink>
+
+  )
   const loggedOutIcons = <> 
   <NavLink  className={styles.NavLink} activeClassName={styles.Active}to='/signin' > <i className="fa-regular fa-user"></i> Sign In</NavLink>
   <NavLink className={styles.NavLink} activeClassName={styles.Active} to='/signup' > <i className="fa-solid fa-pen"></i> Sign Up</NavLink>
   </>
   const loggedInIcons = <>
-    {currentUser?.username}
-    <NavLink  className={styles.NavLink} activeClassName={styles.Active}to='/signout' > <i className="fa-solid fa-person-walking-dashed-line-arrow-right"></i> Sign Out</NavLink>
+    <NavLink  className={styles.NavLink} activeClassName={styles.Active}to='/liked' > <i className="fa-solid fa-heart-circle-bolt"></i> Liked</NavLink>
+
+    <NavLink  className={styles.NavLink} activeClassName={styles.Active}to='/' onClick={HandleSignOut} > <i className="fa-solid fa-person-walking-dashed-line-arrow-right"></i> Sign Out</NavLink>
+
+    <NavLink  className={styles.NavLink} activeClassName={styles.Active}to={`/profiles/${currentUser?.profile_id}`} onClick={() => {}} > <Avatar src={currentUser?.profile_image} text='Profile'/> Profile</NavLink>
 
   </>
   return (
-    
     <Navbar expand='md' fixed='top' className={styles.NavBar}>
         <Container>
           <NavLink to='/'>
         <Navbar.Brand><img src={icon} alt='Icon' height='55' width='55'></img> MarketPlace
         </Navbar.Brand> 
         </NavLink>
-        
+        { currentUser && addProductIcon}
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="ml-auto text-left">

@@ -17,3 +17,9 @@ i:hover {
     height: 100%;
     width: 100%;
   }
+
+.Product {
+max-height: 40vh;
+max-width: 100%;
+object-fit: contain;
+}

@@ -15,19 +15,26 @@ const SignUpForm = () => {
           <h1 className={styles.Header}>sign up</h1>
 
     <Form>
-      <Form.Group controlId="formBasicEmail">
-        <Form.Label>Email address</Form.Label>
-        <Form.Control type="email" placeholder="Enter email" />
+      <Form.Group controlId="username">
+        <Form.Label>Username</Form.Label>
+        <Form.Control type="password" placeholder="Please insert your username" name="username" />
       </Form.Group>
 
-      <Form.Group controlId="formBasicPassword">
+      <Form.Group controlId="password1">
         <Form.Label>Password</Form.Label>
-        <Form.Control type="password" placeholder="Password" />
+        <Form.Control type="password1" placeholder="Password" name="password1"/>
       </Form.Group>
-      <Button variant="primary" type="submit">
+        <Form.Group controlId="password2">
+        <Form.Label>Password</Form.Label>
+        <Form.Control type="password2" placeholder=" Confirm your Password" name='password2'/>
+        </Form.Group>
+      
+
+      <Button className={`${btnStyles.Blue} ${btnStyles.Wide} ${btnStyles.Bright}`} variant="primary" type="submit">
         Submit
       </Button>
     </Form>
+
         </Container>
         <Container className={`mt-3 ${appStyles.Content}`}>
           <Link className={styles.Link} to="/signin">

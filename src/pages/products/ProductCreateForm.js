@@ -1,17 +1,19 @@
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Container from "react-bootstrap/Container";
-
+import { axiosReq } from "../../api/axiosDefaults";
 import Upload from "../../assets/upload.jpg";
 import { Image } from "react-bootstrap";
 import styles from "../../styles/ProductCreateEditForm.module.css";
 import appStyles from "../../App.module.css";
 import btnStyles from "../../styles/Button.module.css";
 import Asset from "../../components/Asset";
+import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
+import { Alert } from "bootstrap";
 
 function ProductCreateForm() {
   const [productCreation, setProductCreation] = useState({
@@ -20,6 +22,9 @@ function ProductCreateForm() {
     image: ""
   });
 const {title, description, image} = productCreation;
+
+const imageInput = useRef(null)
+const history = useHistory()
 
   const handleChange = (event) =>{
     setProductCreation({
@@ -39,6 +44,21 @@ const {title, description, image} = productCreation;
 
   const handleSubmit = async(event) => {
     event.preventDefault();
+    const formData = new FormData();
+
+    formData.append("title", title);
+    formData.append("description", description);
+    formData.append("image", imageInput.current.files[0]);
+
+    try {
+      const { data } = await axiosReq.post("/posts/", formData);
+      history.push(`/posts/${data.id}`);
+    } catch (err) {
+      console.log(err);
+      if (err.response?.status !== 401) {
+        setErrors(err.response?.data);
+      }
+    }
 
   }
 
@@ -49,22 +69,31 @@ const {title, description, image} = productCreation;
   const textFields = (
     <div className="text-center">
       
-      <Form>
   <Form.Group controlId="title">
     <Form.Label>Title</Form.Label>
     <Form.Control type="text" placeholder="Give a title to your product" name="title" value={title} onChange={handleChange} />
     </Form.Group>
+    {errors?.title?.map((message, idx) => (
+        <Alert variant="warning" key={idx}>
+          {message}
+        </Alert>
+      ))}
     <Form.Group controlId="description">
     <Form.Label>Description</Form.Label>
     <Form.Control as='textarea' rows={10} placeholder="Insert your description" name="description" value={description} onChange={handleChange} />
     </Form.Group>
-    </Form>
+    {errors?.description?.map((message, idx) => (
+        <Alert variant="warning" key={idx}>
+          {message}
+        </Alert>
+      ))}
+    
 
     
     
       <Button
         className={`${btnStyles.Button} ${btnStyles.Blue}`}
-        onClick={() => {}}
+        onClick={() => {history.goBack()}}
       >
         cancel
       </Button>
@@ -75,7 +104,7 @@ const {title, description, image} = productCreation;
   );
 
   return (
-    <Form>
+    <Form onSubmit={handleSubmit}>
       <Row>
         <Col className="py-2 p-0 p-md-2" md={7} lg={8}>
           <Container
@@ -101,8 +130,13 @@ const {title, description, image} = productCreation;
                   <Asset src={Upload} message='Click here to upload an image' />
                 </Form.Label>)}
               
-    <Form.File id="image-upload" accept="image/*" onChange={handleChangeImage} />
+    <Form.File id="image-upload" accept="image/*" onChange={handleChangeImage} ref={imageInput} />
             </Form.Group>
+            {errors?.image?.map((message, idx) => (
+        <Alert variant="warning" key={idx}>
+          {message}
+        </Alert>
+      ))}
             <div className="d-md-none">{textFields}</div>
           </Container>
         </Col>

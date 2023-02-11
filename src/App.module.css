@@ -2,3 +2,13 @@
     font-family: 'Kaushan Script', cursive;
     min-height: 100vh;
 }
+
+i:hover {
+    color: black;
+    font-size: 150%;
+}
+
+.Padding{
+    padding-top: 100px;
+}
+

@@ -5,6 +5,8 @@
     border: 1px solid #8dc9e1
 }
 
+
+
 i:hover {
     color: black;
     font-size: 150%;
@@ -12,6 +14,12 @@ i:hover {
 
 a:hover{
     text-decoration: none;
+    color: black;
+    font-size: 150%;
+}
+
+a, i{
+    color: #555;
 }
 
 .NavLink{

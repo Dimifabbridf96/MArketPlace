@@ -7,7 +7,7 @@ import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
 import Image from "react-bootstrap/Image";
 import Container from "react-bootstrap/Container";
-
+import axios from "axios";
 import { Link, useHistory } from "react-router-dom";
 
 import styles from "../../styles/SignInUpForm.module.css";
@@ -22,7 +22,7 @@ function SignInForm() {
         password: "",
     })
 
-    const {username, password} = SignInData;
+    const {username, password} = signIn;
 
     const [errors, setErrors] = useState({});
 
@@ -37,10 +37,10 @@ function SignInForm() {
     const handleSubmit = async(event) =>{
         event.preventDefault();
         try{
-            const {data} = await axios.post('dj-rest-auth/login/', signIn);
+            await axios.post('dj-rest-auth/login/', signIn);
             history.push('/')
         }catch{
-            setErrors(err.response?.data);
+            setErrors(errors.response?.data);
         }
     }
 
@@ -62,7 +62,7 @@ function SignInForm() {
          </Form.Group>
          {errors.password?.map((message, idx) => (<Alert variant='danger' key={idx}>{message}</Alert>))}
 
-         <Button variant="primary" type="submit">
+         <Button className={`${btnStyles.Blue} ${btnStyles.Wide} ${btnStyles.Bright}`} variant="primary" type="submit">
            Enter in the Market !
          </Button>
          {errors.non_field_errors?.map((message, idx) => (
@@ -86,7 +86,7 @@ function SignInForm() {
       >
         <Image
           className={`${appStyles.FillerImage}`}
-          src={}
+          src={Market}
         />
       </Col>
     </Row>

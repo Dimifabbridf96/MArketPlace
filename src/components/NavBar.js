@@ -1,10 +1,22 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import styles from '../styles/NavBar.module.css'
 import {Container, Nav, Navbar} from 'react-bootstrap';
 import icon from '../assets/marketplace-icon.png'
 import { NavLink } from 'react-router-dom';
+import { CurrentUserContext } from '../App';
 
 const NavBar = () => {
+  const currentUser = useContext(CurrentUserContext)
+  const loggedOutIcons = <> 
+  <NavLink exact className={styles.NavLink} activeClassName={styles.Active} to='/'><i className="fa-solid fa-house-user"></i>Home</NavLink>
+  <NavLink  className={styles.NavLink} activeClassName={styles.Active}to='/signin' > <i className="fa-regular fa-user"></i> Sign In</NavLink>
+  <NavLink className={styles.NavLink} activeClassName={styles.Active} to='/signup' > <i className="fa-solid fa-pen"></i> Sign Up</NavLink>
+  </>
+  const loggedInIcons = <>
+    {currentUser?.username}
+    <NavLink  className={styles.NavLink} activeClassName={styles.Active}to='/signout' > <i className="fa-solid fa-person-walking-dashed-line-arrow-right"></i> Sign Out</NavLink>
+
+  </>
   return (
     
     <Navbar expand='md' fixed='top' className={styles.NavBar}>
@@ -18,8 +30,7 @@ const NavBar = () => {
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="ml-auto text-left">
             <NavLink exact className={styles.NavLink} activeClassName={styles.Active} to='/'><i className="fa-solid fa-house-user"></i>Home</NavLink>
-            <NavLink  className={styles.NavLink} activeClassName={styles.Active}to='/signin' > <i className="fa-regular fa-user"></i> Sign In</NavLink>
-            <NavLink className={styles.NavLink} activeClassName={styles.Active} to='/signup' > <i className="fa-solid fa-pen"></i> Sign Up</NavLink>
+            {currentUser ? loggedInIcons : loggedOutIcons}
             
 
           </Nav>

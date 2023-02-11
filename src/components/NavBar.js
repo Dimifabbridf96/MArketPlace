@@ -1,14 +1,13 @@
-import React, { useContext } from 'react'
+import React from 'react'
 import styles from '../styles/NavBar.module.css'
 import {Container, Nav, Navbar} from 'react-bootstrap';
 import icon from '../assets/marketplace-icon.png'
 import { NavLink } from 'react-router-dom';
-import { CurrentUserContext } from '../App';
+import { useCurrentUser } from '../contexts/CurrentUserProvider';
 
 const NavBar = () => {
-  const currentUser = useContext(CurrentUserContext)
+  const currentUser = useCurrentUser();
   const loggedOutIcons = <> 
-  <NavLink exact className={styles.NavLink} activeClassName={styles.Active} to='/'><i className="fa-solid fa-house-user"></i>Home</NavLink>
   <NavLink  className={styles.NavLink} activeClassName={styles.Active}to='/signin' > <i className="fa-regular fa-user"></i> Sign In</NavLink>
   <NavLink className={styles.NavLink} activeClassName={styles.Active} to='/signup' > <i className="fa-solid fa-pen"></i> Sign Up</NavLink>
   </>

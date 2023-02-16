@@ -5,6 +5,8 @@ import { Link } from 'react-router-dom';
 import Avatar from '../../components/Avatar';
 import styles from '../../styles/Product.module.css'
 import { axiosReq, axiosRes } from '../../api/axiosDefaults';
+import { MoreDropdown } from '../../components/MoreDropdown';
+import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
 
 const Products = (props) => {
     const{
@@ -27,8 +29,22 @@ const Products = (props) => {
 
     const currentUser = useCurrentUser();
     const is_owner = currentUser?.username === owner;
+    const history = useHistory();
 
-    const HandleLike = async() => {
+    const handleEdit = () =>{
+      history.push(`/products/${id}`)
+    }
+
+    const handleDelete = async() =>{
+      try{
+      await axiosRes.delete(`/products/${id}/`)
+      history.goBack()
+      }catch(err){
+        console.log(err)
+      }
+
+    }
+    const handleLike = async() => {
         try{
             const {data} = await axiosReq.post('/likes/', {product: id});
         setProduct((prevProduct) => ({
@@ -42,7 +58,7 @@ const Products = (props) => {
         }
     };
 
-    const HandleUnlike = async() =>{
+    const handleUnlike = async() =>{
         try{
             await axiosRes.delete(`likes/${like_id}`);
             setProduct((prevProduct) => ({
@@ -67,7 +83,7 @@ const Products = (props) => {
             </Link>
             <div className="d-flex align-items-center">
               <span>{updated_at}</span>
-              {is_owner && productPage && "..."}
+              {is_owner && productPage && <MoreDropdown handleEdit={handleEdit} handleDelete={handleDelete}/>}
             </div>
           </Media>
         </Card.Body>
@@ -90,11 +106,11 @@ const Products = (props) => {
               <i className={`fa-regular fa-circle-up ${styles.Neutral}`} />
             </OverlayTrigger>
           ) : like_id ? (
-            <span onClick={() => HandleUnlike }>
+            <span onClick={() => handleUnlike }>
               <i className={`fa-regular fa-circle-up ${styles.Upvote}`} />
             </span>
           ) : currentUser ? (
-            <span onClick={() => HandleLike}>
+            <span onClick={() => handleLike}>
               <i className={`fa-solid fa-circle-up ${styles.Upvote}`} />
             </span>
           ) : (

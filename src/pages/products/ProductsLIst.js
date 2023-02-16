@@ -11,6 +11,7 @@ import Products from "./Products";
 import NoResults from "../../assets/noResults.jpg";
 import Asset from "../../components/Asset";
 import InfiniteScroll from "react-infinite-scroll-component";
+import { fetchMoreData } from "../../utils/utils";
 
 function ProductsPage({message, filter=""}) {
     const [products, setProducts] = useState({results: []});
@@ -36,7 +37,7 @@ function ProductsPage({message, filter=""}) {
         return () => {
           clearTimeout(timer);
         };
-  }, [filter, pathname]);
+  }, [filter, query, pathname]);
 
   return (
     <Row className="h-100">
@@ -64,7 +65,7 @@ function ProductsPage({message, filter=""}) {
               dataLength={products.results.length}
                 loader={<Asset spinner />}
                 hasMore={!!products.next}
-                next={() => {}}/>
+                next={() => fetchMoreData(products, setProducts)}/>
              
             ) : (
               <Container>

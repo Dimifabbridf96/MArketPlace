@@ -51,6 +51,8 @@ const history = useHistory()
     formData.append("title", title);
     formData.append("description", description);
     formData.append("image", imageInput.current.files[0]);
+    formData.append("category", category);
+    formData.append("price", price);
 
     try {
       const { data } = await axiosReq.post("/products/", formData);

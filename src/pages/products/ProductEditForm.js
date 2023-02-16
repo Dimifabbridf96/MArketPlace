@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
@@ -6,13 +6,11 @@ import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Container from "react-bootstrap/Container";
 import { axiosReq } from "../../api/axiosDefaults";
-import Upload from "../../assets/upload.jpg";
 import { Image } from "react-bootstrap";
 import styles from "../../styles/ProductCreateEditForm.module.css";
 import appStyles from "../../App.module.css";
 import btnStyles from "../../styles/Button.module.css";
-import Asset from "../../components/Asset";
-import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
+import { useHistory, useParams } from "react-router-dom/cjs/react-router-dom.min";
 import { Alert } from "bootstrap";
 
 function ProductEditForm() {
@@ -27,6 +25,22 @@ const {title, description, image, category, price} = productCreation;
 
 const imageInput = useRef(null)
 const history = useHistory()
+const { id } = useParams();
+
+  useEffect(() => {
+    const handleMount = async () => {
+      try {
+        const { data } = await axiosReq.get(`/posts/${id}/`);
+        const { title, image, is_owner } = data;
+
+        is_owner ? setProductCreation({ title, image }) : history.push("/");
+      } catch (err) {
+         console.log(err);
+      }
+    };
+
+    handleMount();
+  }, [history, id]);
 
   const handleChange = (event) =>{
     setProductCreation({
@@ -50,11 +64,16 @@ const history = useHistory()
 
     formData.append("title", title);
     formData.append("description", description);
-    formData.append("image", imageInput.current.files[0]);
+    if (imageInput?.current?.files[0]) {
+        formData.append("image", imageInput.current.files[0]);
+      }
+    formData.append("category", category);
+    formData.append("price", price);
+  
 
     try {
-      const { data } = await axiosReq.post("/products/", formData);
-      history.push(`/products/${data.id}`);
+      axiosReq.put(`/products/${id}`, formData);
+      history.push(`/products/${id}`);
     } catch (err) {
       console.log(err);
       if (err.response?.status !== 401) {
@@ -128,7 +147,7 @@ const history = useHistory()
         cancel
       </Button>
       <Button className={`${btnStyles.Button} ${btnStyles.Blue}`} type="submit">
-        create
+        save
       </Button>
     </div>
   );
@@ -141,7 +160,7 @@ const history = useHistory()
             className={`${appStyles.Content} ${styles.Container} d-flex flex-column justify-content-center`}
           >
             <Form.Group className="text-center">
-              {image ? (<>
+            
                   <figure>
                     <Image className={appStyles.Product} src={image} rounded />
                   </figure>
@@ -153,12 +172,6 @@ const history = useHistory()
                       Change the image
                     </Form.Label>
                   </div>
-                </>) : (  <Form.Label
-                  className="d-flex justify-content-center"
-                  htmlFor="image-upload"
-                >
-                  <Asset src={Upload} message='Click here to upload an image' />
-                </Form.Label>)}
               
     <Form.File id="image-upload" accept="image/*" onChange={handleChangeImage} ref={imageInput} />
             </Form.Group>

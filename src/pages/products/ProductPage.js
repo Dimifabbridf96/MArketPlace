@@ -34,7 +34,7 @@ function ProductPage() {
     <Row className="h-100">
       <Col className="py-2 p-0 p-lg-2" lg={8}>
         <p>Popular profiles for mobile</p>
-        <Products {...product.results[0]} setProduct={setProduct}/>
+        <Products {...product.results[0]} setProduct={setProduct} postPage/>
         <Container className={appStyles.Content}>
           Comments
         </Container>

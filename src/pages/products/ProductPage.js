@@ -6,6 +6,7 @@ import Container from "react-bootstrap/Container";
 
 import appStyles from "../../App.module.css";
 import { useParams } from "react-router-dom/cjs/react-router-dom.min";
+import Products from "./Products";
 
 function ProductPage() {
   const { id } = useParams(); 
@@ -33,7 +34,7 @@ function ProductPage() {
     <Row className="h-100">
       <Col className="py-2 p-0 p-lg-2" lg={8}>
         <p>Popular profiles for mobile</p>
-        <p>Product component</p>
+        <Products {...product.results[0]} setProduct={setProduct}/>
         <Container className={appStyles.Content}>
           Comments
         </Container>

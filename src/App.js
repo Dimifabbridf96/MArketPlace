@@ -7,6 +7,7 @@ import SignUpForm from './pages/auth/SignUpForm';
 import SignInForm from './pages/auth/SignInForm';
 import ProductCreateForm from './pages/products/ProductCreateForm';
 import ProductPage from './pages/products/ProductPage';
+import Products from './pages/products/Products';
 
 function App() {
 
@@ -19,6 +20,7 @@ function App() {
           <Route exact path='/signin' render={() => <SignInForm/>}/>
           <Route exact path='/signup' render={() => <SignUpForm/>}/>
           <Route exact path='/product/create' render={() => <ProductCreateForm/>} />
+          <Route exact path='/product' render={() => <Products/>} />
           <Route exact path='/product/:id' render={() => <ProductPage/>} />
           <Route render={() => <p>Page not found</p>} />
         </Switch>

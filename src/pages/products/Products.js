@@ -1,10 +1,10 @@
 import React from 'react';
 import { useCurrentUser } from '../../contexts/CurrentUserContext';
-import { Card, Media } from 'react-bootstrap';
+import { Card, Media, OverlayTrigger, Tooltip } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import Avatar from '../../components/Avatar';
 import styles from '../../styles/Product.module.css'
-
+import { axiosReq, axiosRes } from '../../api/axiosDefaults';
 
 const Products = (props) => {
     const{
@@ -21,11 +21,41 @@ const Products = (props) => {
         like_id,
         likes_count,
         comments_count,
-        postPage
+        productPage,
+        setProduct
     } = props;
 
     const currentUser = useCurrentUser();
     const is_owner = currentUser?.username === owner;
+
+    const HandleLike = async() => {
+        try{
+            const {data} = await axiosReq.post('/likes/', {product: id});
+        setProduct((prevProduct) => ({
+            ...prevProduct, results: prevProduct.results.map((product) =>{
+                return product.id === id
+                ? {...product, likes_count: product.likes_count +1, like_id: data.id } : product;
+            }),
+        }));
+        }catch(err){
+            console.log(err)
+        }
+    };
+
+    const HandleUnlike = async() =>{
+        try{
+            await axiosRes.delete(`likes/${like_id}`);
+            setProduct((prevProduct) => ({
+                ...prevProduct, results: prevProduct.results.map((product) =>{
+                    return product.id === id
+                    ? {...product, likes_count: product.likes_count - 1, like_id: null } : product;
+                }),
+            }));
+            }catch(err){
+                console.log(err)
+            }
+        };
+    
   
     return (
       <Card className={styles.Post}>
@@ -51,9 +81,39 @@ const Products = (props) => {
           {category && <Card.Text>{category}</Card.Text>}
         {price && <Card.Title className="text-center">{price}</Card.Title>}
           {price && <Card.Text>{price}</Card.Text>}
+          <div>
+          {is_owner ? (
+            <OverlayTrigger
+              placement="top"
+              overlay={<Tooltip>Autolike not allowed !</Tooltip>}
+            >
+              <i className={`fa-regular fa-circle-up ${styles.Neutral}`} />
+            </OverlayTrigger>
+          ) : like_id ? (
+            <span onClick={() => HandleUnlike }>
+              <i className={`fa-regular fa-circle-up ${styles.Upvote}`} />
+            </span>
+          ) : currentUser ? (
+            <span onClick={() => HandleLike}>
+              <i className={`fa-solid fa-circle-up ${styles.Upvote}`} />
+            </span>
+          ) : (
+            <OverlayTrigger
+              placement="top"
+              overlay={<Tooltip>Log in to like product!</Tooltip>}
+            >
+              <i className="fa-regular fa-circle-up" />
+            </OverlayTrigger>
+          )}
+          {likes_count}
+          <Link to={`/product/${id}`}>
+            <i className="far fa-comments" />
+          </Link>
+          {comments_count}
+        </div>
         </Card.Body>
         </Card>
   )
-}
+          }
 
 export default Products

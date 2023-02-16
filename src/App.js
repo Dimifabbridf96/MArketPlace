@@ -26,6 +26,7 @@ const profile_id = currentUser?.profile_id || "";
           <Route exact path='/signin' render={() => <SignInForm/>}/>
           <Route exact path='/signup' render={() => <SignUpForm/>}/>
           <Route exact path='/product/create' render={() => <ProductCreateForm/>} />
+          <Route exact path='/product/:id/edit' render={() => <ProductEditForm/>} />
           <Route exact path='/product' render={() => <Products/>} />
           <Route exact path='/product/:id' render={() => <ProductPage/>} />
           <Route render={() => <p>Page not found</p>} />

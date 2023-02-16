@@ -37,16 +37,20 @@ const Products = (props) => {
             </Link>
             <div className="d-flex align-items-center">
               <span>{updated_at}</span>
-              {is_owner && postPage && "..."}
+              {is_owner && productPage && "..."}
             </div>
           </Media>
         </Card.Body>
-        <Link to={`/posts/${id}`}>
+        <Link to={`/products/${id}`}>
           <Card.Img src={image} alt={title} />
         </Link>
         <Card.Body>
           {title && <Card.Title className="text-center">{title}</Card.Title>}
           {description && <Card.Text>{description}</Card.Text>}
+          {category && <Card.Title className="text-center">{category}</Card.Title>}
+          {category && <Card.Text>{category}</Card.Text>}
+        {price && <Card.Title className="text-center">{price}</Card.Title>}
+          {price && <Card.Text>{price}</Card.Text>}
         </Card.Body>
         </Card>
   )

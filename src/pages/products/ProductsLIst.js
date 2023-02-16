@@ -10,6 +10,7 @@ import { useLocation } from "react-router-dom/cjs/react-router-dom.min";
 import Products from "./Products";
 import NoResults from "../../assets/noResults.jpg";
 import Asset from "../../components/Asset";
+import InfiniteScroll from "react-infinite-scroll-component";
 
 function ProductsPage({message, filter=""}) {
     const [products, setProducts] = useState({results: []});
@@ -57,9 +58,14 @@ function ProductsPage({message, filter=""}) {
         {hasLoaded ? (
           <>
             {products.results.length ? (
-              products.results.map((products) => (
+              <InfiniteScroll children= { products.results.map((products) => (
                 <Products key={products.id} {...products} setProducts={setProducts} />
-              ))
+              ))}
+              dataLength={products.results.length}
+                loader={<Asset spinner />}
+                hasMore={!!products.next}
+                next={() => {}}/>
+             
             ) : (
               <Container>
                 <Asset src={NoResults} message={message} />

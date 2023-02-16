@@ -19,9 +19,11 @@ function ProductCreateForm() {
   const [productCreation, setProductCreation] = useState({
     title: "",
     description: "",
-    image: ""
+    image: "",
+    category:"",
+    price: "",
   });
-const {title, description, image} = productCreation;
+const {title, description, image, category, price} = productCreation;
 
 const imageInput = useRef(null)
 const history = useHistory()
@@ -51,8 +53,8 @@ const history = useHistory()
     formData.append("image", imageInput.current.files[0]);
 
     try {
-      const { data } = await axiosReq.post("/posts/", formData);
-      history.push(`/posts/${data.id}`);
+      const { data } = await axiosReq.post("/products/", formData);
+      history.push(`/products/${data.id}`);
     } catch (err) {
       console.log(err);
       if (err.response?.status !== 401) {
@@ -87,9 +89,37 @@ const history = useHistory()
           {message}
         </Alert>
       ))}
-    
 
-    
+    <Form.Group controlId="category">
+        <Form.Label>Category</Form.Label>
+        <select name="category" className={styles.Margin} value={category} onChange={handleChange}>
+          <option value='Other'>Other</option>
+          <option value='Beauty'>Beauty</option>
+          <option value='Home & Garden'>Home & Garden</option>
+          <option value='Toys & Game'>Toys & Game</option>
+          <option value='Sport & Outdoor'>Sport & Outdoor</option>
+          <option value='Pet Supply'>Pet Supply</option>
+          <option value='Books'>Books</option>
+          <option value='Electronics'>Electronics</option>
+          <option value='Car & Motorbike'>Car & Motorbike</option>
+        </select>
+    </Form.Group>
+    {errors?.category?.map((message, idx) => (
+        <Alert variant="warning" key={idx}>
+          {message}
+        </Alert>
+      ))}
+
+    <Form.Group controlId="price">
+    <Form.Label>Price</Form.Label>
+    <Form.Control type="number" min="0" max="99999999"  step="0.01" placeholder="Insert Your Price " name="price" value={price} onChange={handleChange} />
+    </Form.Group>
+    {errors?.price?.map((message, idx) => (
+        <Alert variant="warning" key={idx}>
+          {message}
+        </Alert>
+      ))}
+        
     
       <Button
         className={`${btnStyles.Button} ${btnStyles.Blue}`}

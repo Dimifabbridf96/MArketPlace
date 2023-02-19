@@ -1,10 +1,10 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Media } from 'react-bootstrap';
+import CommentEditForm from "./CommentEditForm";
 import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
 import { MoreDropdown } from '../../components/MoreDropdown';
 import { useCurrentUser } from '../../contexts/CurrentUserContext';
 import styles from '../../styles/Comment.module.css'
-
 
 const Comments = (props) => {
     const{
@@ -18,6 +18,7 @@ const Comments = (props) => {
         id,
     }= props;
 
+    const [showEditForm, setShowEditForm] = useState(false);
     const currentUser = useCurrentUser();
     const is_owner = currentUser?.username === owner;    
     const history = useHistory();
@@ -39,24 +40,41 @@ const Comments = (props) => {
         console.log(err)
       }
 }
-    }
+    
 
   return (
-    <div>
+      <>
         <hr />
         <Media>
-        <Link to={`/profiles/${profile_id}`}>
-          <Avatar src={profile_image} />
-        </Link>
-        <Media.Body>
+          <Link to={`/profiles/${profile_id}`}>
+            <Avatar src={profile_image} />
+          </Link>
+          <Media.Body className="align-self-center ml-2">
             <span className={styles.Owner}>{owner}</span>
-            <span className={styles.Date}>{updated_at}</span>  
-        <p> {comment }</p>
-        </Media.Body>
-        {is_owner && <MoreDropdown handleEdit={handleEdit} handleDelete={handleDelete}/>}
+            <span className={styles.Date}>{updated_at}</span>
+            {showEditForm ? (
+              <CommentEditForm
+              id={id}
+              profile_id={profile_id}
+              content={content}
+              profileImage={profile_image}
+              setComments={setComments}
+              setShowEditForm={setShowEditForm}
+            />
+            ) : (
+              <p>{content}</p>
+            )}
+          </Media.Body>
+          {is_owner && !showEditForm && (
+            <MoreDropdown
+              handleEdit={() => setShowEditForm(true)}
+              handleDelete={handleDelete}
+            />
+          )}
         </Media>
-          </div>     
-  )
+      </>
+    );
+  
 }
 
 export default Comments

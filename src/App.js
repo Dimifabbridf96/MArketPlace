@@ -12,6 +12,7 @@ import { useCurrentUser } from './contexts/CurrentUserContext';
 import ProductsPage from './pages/products/ProductsLIst';
 import ProductEditForm from './pages/products/ProductEditForm';
 import Comments from './pages/comments/Comments';
+import CommentEditForm from './pages/comments/CommentEditForm';
 
 
 function App() {
@@ -29,6 +30,7 @@ const profile_id = currentUser?.profile_id || "";
           <Route exact path='/signup' render={() => <SignUpForm/>}/>
           <Route exact path='/product/create' render={() => <ProductCreateForm/>} />
           <Route exact path='/product/:id/edit' render={() => <ProductEditForm/>} />
+          <Route exact path='/comments/:id/edit' render={() => <CommentEditForm/>} />
           <Route exact path='/product' render={() => <Products/>} />
           <Route exact path='/product/:id' render={() => <ProductPage/>} />
           <Route render={() => <p>Page not found</p>} />

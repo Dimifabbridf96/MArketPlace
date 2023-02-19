@@ -7,6 +7,7 @@ import Container from "react-bootstrap/Container";
 import appStyles from "../../App.module.css";
 import { useParams } from "react-router-dom/cjs/react-router-dom.min";
 import Products from "./Products";
+import Comments from "../comments/Comments";
 
 function ProductPage() {
   const { id } = useParams(); 
@@ -19,11 +20,12 @@ const [comments, setComments] = useState({ results: [] });
   useEffect(() => {
     const handleMount = async () => {
       try {
-        const [{ data: product }] = await Promise.all([
+        const [{ data: product }, {data: comments}] = await Promise.all([
           axiosReq.get(`/product/${id}`),
+          axiosReq.get(`/comments/?product=${id}`)
         ]);
         setProduct({ results: [product] });
-        console.log(product);
+        setComments(comments);
       } catch (err) {
         console.log(err);
       }
@@ -49,8 +51,17 @@ const [comments, setComments] = useState({ results: [] });
   setComments={setComments}
 />
 ) : comments.results.length ? (
-  "Comments"
+   "Comments"
 ) : null}
+{comments.results.length ? ( 
+  comments.results.map(comment =>(
+   <Comments key={comment.id} {...comment}/>
+)) 
+): currentUser ? (
+  <span>No commented yet, be the first</span>
+): (
+  <span>No comment, <a to='/signin'>Log in </a>and be the first</span>
+)}
         </Container>
       </Col>
       <Col lg={4} className="d-none d-lg-block p-0 p-lg-2">

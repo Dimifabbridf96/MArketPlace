@@ -12,6 +12,10 @@ function ProductPage() {
   const { id } = useParams(); 
   const [product, setProduct] = useState({ results: [] });
 
+  const currentUser = useCurrentUser();
+const profile_image = currentUser?.profile_image;
+const [comments, setComments] = useState({ results: [] });
+
   useEffect(() => {
     const handleMount = async () => {
       try {
@@ -36,7 +40,17 @@ function ProductPage() {
         <p>Popular profiles for mobile</p>
         <Products {...product.results[0]} setProduct={setProduct} productPage/>
         <Container className={appStyles.Content}>
-          Comments
+        {currentUser ? (
+  <CommentCreateForm
+  profile_id={currentUser.profile_id}
+  profileImage={profile_image}
+  post={id}
+  setProduct={setProduct}
+  setComments={setComments}
+/>
+) : comments.results.length ? (
+  "Comments"
+) : null}
         </Container>
       </Col>
       <Col lg={4} className="d-none d-lg-block p-0 p-lg-2">

@@ -11,6 +11,10 @@ const Comments = (props) => {
         profile_id,
         profile_image,
     }= props;
+
+    const currentUser = useCurrentUser();
+    const is_owner = currentUser?.username === owner;
+
   return (
     <div>
         <hr />
@@ -21,6 +25,7 @@ const Comments = (props) => {
         <Media.Body>
             <span className={styles.Owner}>{owner}</span>
             <span className={styles.Date}>{updated_at}</span>
+            {is_owner && <MoreDropdown handleEdit={handleEdit} handleDelete={handleDelete}/>}
         <p> {comment }</p>
         </Media.Body>
         </Media>

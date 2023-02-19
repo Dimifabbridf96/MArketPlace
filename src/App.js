@@ -11,7 +11,6 @@ import Products from './pages/products/Products';
 import { useCurrentUser } from './contexts/CurrentUserContext';
 import ProductsPage from './pages/products/ProductsLIst';
 import ProductEditForm from './pages/products/ProductEditForm';
-import Comments from './pages/comments/Comments';
 import CommentEditForm from './pages/comments/CommentEditForm';
 
 

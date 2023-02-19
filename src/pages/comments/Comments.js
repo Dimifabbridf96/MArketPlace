@@ -1,10 +1,13 @@
 import React, { useState } from 'react'
 import { Media } from 'react-bootstrap';
 import CommentEditForm from "./CommentEditForm";
-import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
 import { MoreDropdown } from '../../components/MoreDropdown';
 import { useCurrentUser } from '../../contexts/CurrentUserContext';
 import styles from '../../styles/Comment.module.css'
+import { axiosRes } from '../../api/axiosDefaults';
+import { Link } from 'react-router-dom';
+import Avatar from '../../components/Avatar';
+
 
 const Comments = (props) => {
     const{
@@ -21,7 +24,6 @@ const Comments = (props) => {
     const [showEditForm, setShowEditForm] = useState(false);
     const currentUser = useCurrentUser();
     const is_owner = currentUser?.username === owner;    
-    const history = useHistory();
 
     const handleDelete = async() =>{
       try{
@@ -56,13 +58,13 @@ const Comments = (props) => {
               <CommentEditForm
               id={id}
               profile_id={profile_id}
-              content={content}
+              comment={comment}
               profileImage={profile_image}
               setComments={setComments}
               setShowEditForm={setShowEditForm}
             />
             ) : (
-              <p>{content}</p>
+              <p>{comment}</p>
             )}
           </Media.Body>
           {is_owner && !showEditForm && (

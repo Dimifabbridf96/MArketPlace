@@ -3,11 +3,16 @@ import { axiosReq } from "../../api/axiosDefaults";
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
 import Container from "react-bootstrap/Container";
-
 import appStyles from "../../App.module.css";
 import { useParams } from "react-router-dom/cjs/react-router-dom.min";
 import Products from "./Products";
 import Comments from "../comments/Comments";
+import InfiniteScroll from "react-infinite-scroll-component";
+import Asset from "../../components/Asset";
+import { fetchMoreData } from "../../utils/utils";
+import { useCurrentUser } from "../../contexts/CurrentUserContext";
+import CommentCreateForm from "../comments/CommentCreateForm";
+
 
 function ProductPage() {
   const { id } = useParams(); 
@@ -54,14 +59,19 @@ const [comments, setComments] = useState({ results: [] });
    "Comments"
 ) : null}
 {comments.results.length ? ( 
-  comments.results.map(comment =>(
+  <InfiniteScroll children ={comments.results.map(comment =>(
    <Comments key={comment.id} {...comment}
    setProduct={setProduct} setComments={setComments}/>
-)) 
-): currentUser ? (
+))}
+dataLength={comments.results.length}
+loader={<Asset spinner />}
+hasMore={!!comments.next}
+next={() => fetchMoreData(comments, setComments) }/>
+  
+) : currentUser ? (
   <span>No commented yet, be the first</span>
 ): (
-  <span>No comment, <a to='/signin'>Log in </a>and be the first</span>
+  <span>No comment, <a href='/signin'>Log in </a>and be the first</span>
 )}
         </Container>
       </Col>

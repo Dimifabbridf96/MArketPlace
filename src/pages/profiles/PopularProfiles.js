@@ -1,31 +1,12 @@
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import { Container } from 'react-bootstrap'
-import { axiosReq } from '../../api/axiosDefaults';
 import appStyles from '../../App.module.css'
 import Asset from '../../components/Asset';
-import { useCurrentUser } from '../../contexts/CurrentUserContext';
+import { useProfileData } from '../../contexts/ProfileDataContext';
+import Profile from './Profile';
 
 const PopularProfiles = ({mobile}) => {
-  const[profileData, setProfileData] = useState({
-    pageProfile: { results: []},
-    PopularProfiles: {results: []},
-  });
-  const[PopularProfiles] = profileData;
-  const currentUser = useCurrentUser();
-
-  useEffect(() => {
-    const HandleMount = async() =>{
-      try{
-        const {data} = await axiosReq.get(`/profiles/?ordering=-followers_count`);
-        setProfileData(prevState =>({
-          ...prevState, PopularProfiles: data,
-        }))
-      }catch(err){
-          console.log(err)
-      }
-    }
-    HandleMount()
-  }, [currentUser])
+  const { PopularProfiles} = useProfileData();
 
   
 
@@ -37,12 +18,12 @@ const PopularProfiles = ({mobile}) => {
         {mobile ? (
           <div className='d-flex justify-content-around '>
             {PopularProfiles.results.slice(0,4).map(profile => (
-          <p key={profile.id}> {profile.owner }</p>
+          <Profile key={profile.id} profile={profile} mobile />
         ))}
           </div>
         ): (
           PopularProfiles.results.map(profile => (
-            <p key={profile.id}> {profile.owner }</p>
+            <Profile key={profile.id} profile={profile} />
           ))
         )}
         </>

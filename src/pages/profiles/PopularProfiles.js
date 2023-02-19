@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { Container } from 'react-bootstrap'
 import { axiosReq } from '../../api/axiosDefaults';
 import appStyles from '../../App.module.css'
+import Asset from '../../components/Asset';
 import { useCurrentUser } from '../../contexts/CurrentUserContext';
 
 const PopularProfiles = () => {
@@ -30,10 +31,17 @@ const PopularProfiles = () => {
 
   return (
     <Container className={appStyles.Content}>
+      {PopularProfiles.results.length ? (
+        <>
         <p>Most followed profiles</p>
-        {PopularProfiles.results.map(profile => (
+       {PopularProfiles.results.map(profile => (
           <p key={profile.id}> {profile.owner }</p>
         ))}
+        </>
+        ): (
+          <Asset spinner />
+        )
+        }
     </Container>
   )
 }

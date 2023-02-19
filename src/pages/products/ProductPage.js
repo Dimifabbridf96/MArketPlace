@@ -55,7 +55,8 @@ const [comments, setComments] = useState({ results: [] });
 ) : null}
 {comments.results.length ? ( 
   comments.results.map(comment =>(
-   <Comments key={comment.id} {...comment}/>
+   <Comments key={comment.id} {...comment}
+   setProduct={setProduct} setComments={setComments}/>
 )) 
 ): currentUser ? (
   <span>No commented yet, be the first</span>

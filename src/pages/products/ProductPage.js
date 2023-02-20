@@ -12,6 +12,7 @@ import Asset from "../../components/Asset";
 import { fetchMoreData } from "../../utils/utils";
 import { useCurrentUser } from "../../contexts/CurrentUserContext";
 import CommentCreateForm from "../comments/CommentCreateForm";
+import PopularProfiles from "../profiles/PopularProfiles";
 
 
 function ProductPage() {
@@ -44,7 +45,7 @@ const [comments, setComments] = useState({ results: [] });
   return (
     <Row className="h-100">
       <Col className="py-2 p-0 p-lg-2" lg={8}>
-        <p>Popular profiles for mobile</p>
+        <popularProfiles mobile />
         <Products {...product.results[0]} setProduct={setProduct} productPage/>
         <Container className={appStyles.Content}>
         {currentUser ? (
@@ -76,7 +77,7 @@ next={() => fetchMoreData(comments, setComments) }/>
         </Container>
       </Col>
       <Col lg={4} className="d-none d-lg-block p-0 p-lg-2">
-        Popular profiles for desktop
+        <PopularProfiles />
       </Col>
     </Row>
   );

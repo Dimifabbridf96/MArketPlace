@@ -13,12 +13,14 @@ import Asset from "../../components/Asset";
 import InfiniteScroll from "react-infinite-scroll-component";
 import { fetchMoreData } from "../../utils/utils";
 import PopularProfiles from "../profiles/PopularProfiles";
+import { useCurrentUser } from "../../contexts/CurrentUserContext";
 
 function ProductsPage({message, filter=""}) {
     const [products, setProducts] = useState({results: []});
     const [hasLoaded, setHasLoaded] = useState(false);
     const {pathname} = useLocation();
     const [query, setQuery] = useState("");
+    const currentUser = useCurrentUser();
   
     useEffect(() => {
         const fetchProducts = async () => {
@@ -27,7 +29,7 @@ function ProductsPage({message, filter=""}) {
             setProducts(data);
             setHasLoaded(true);
           } catch (err) {
-            console.log(err);
+            // console.log(err);
           }
         };
         setHasLoaded(false);
@@ -38,7 +40,7 @@ function ProductsPage({message, filter=""}) {
         return () => {
           clearTimeout(timer);
         };
-  }, [filter, query, pathname]);
+  }, [filter, query, pathname, currentUser]);
 
   return (
     <Row className="h-100">

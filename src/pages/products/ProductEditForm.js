@@ -6,7 +6,7 @@ import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Container from "react-bootstrap/Container";
 import { axiosReq } from "../../api/axiosDefaults";
-import { Image } from "react-bootstrap";
+import  Image  from "react-bootstrap/Image";
 import styles from "../../styles/ProductCreateEditForm.module.css";
 import appStyles from "../../App.module.css";
 import btnStyles from "../../styles/Button.module.css";
@@ -35,7 +35,7 @@ const { id } = useParams();
 
         is_owner ? setProductCreation({ title, image }) : history.push("/");
       } catch (err) {
-         console.log(err);
+         // console.log(err);
       }
     };
 
@@ -75,7 +75,7 @@ const { id } = useParams();
       axiosReq.put(`/products/${id}`, formData);
       history.push(`/products/${id}`);
     } catch (err) {
-      console.log(err);
+      // console.log(err);
       if (err.response?.status !== 401) {
         setErrors(err.response?.data);
       }

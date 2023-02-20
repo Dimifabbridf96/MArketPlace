@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Media } from 'react-bootstrap';
+import  Media  from 'react-bootstrap/Media';
 import CommentEditForm from "./CommentEditForm";
 import { MoreDropdown } from '../../components/MoreDropdown';
 import { useCurrentUser } from '../../contexts/CurrentUserContext';
@@ -39,7 +39,7 @@ const Comments = (props) => {
           }))
       }
       catch(err){
-        console.log(err)
+        // console.log(err)
       }
 }
     

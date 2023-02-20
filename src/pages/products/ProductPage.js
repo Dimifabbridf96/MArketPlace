@@ -33,7 +33,7 @@ const [comments, setComments] = useState({ results: [] });
         setProduct({ results: [product] });
         setComments(comments);
       } catch (err) {
-        console.log(err);
+        // console.log(err);
       }
     };
 

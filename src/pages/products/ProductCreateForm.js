@@ -7,13 +7,14 @@ import Col from "react-bootstrap/Col";
 import Container from "react-bootstrap/Container";
 import { axiosReq } from "../../api/axiosDefaults";
 import Upload from "../../assets/upload.jpg";
-import { Image } from "react-bootstrap";
+import  Image  from "react-bootstrap/Image";
 import styles from "../../styles/ProductCreateEditForm.module.css";
 import appStyles from "../../App.module.css";
 import btnStyles from "../../styles/Button.module.css";
 import Asset from "../../components/Asset";
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 import { Alert } from "bootstrap";
+import { useRedirect } from "../../hooks/useRedirect";
 
 function ProductCreateForm() {
   const [productCreation, setProductCreation] = useState({
@@ -24,6 +25,7 @@ function ProductCreateForm() {
     price: "",
   });
 const {title, description, image, category, price} = productCreation;
+useRedirect('loggedOut')
 
 const imageInput = useRef(null)
 const history = useHistory()
@@ -58,7 +60,7 @@ const history = useHistory()
       const { data } = await axiosReq.post("/products/", formData);
       history.push(`/products/${data.id}`);
     } catch (err) {
-      console.log(err);
+      // console.log(err);
       if (err.response?.status !== 401) {
         setErrors(err.response?.data);
       }

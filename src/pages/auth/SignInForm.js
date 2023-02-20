@@ -15,11 +15,12 @@ import btnStyles from "../../styles/Button.module.css";
 import appStyles from "../../App.module.css";
 import Market from '../../assets/signInMarketplace.jpg'
 import { useSetCurrentUser } from "../../contexts/CurrentUserContext";
+import { useRedirect } from "../../hooks/useRedirect";
 
 function SignInForm() {
 
     const setCurrentUser = useSetCurrentUser();
-
+    useRedirect('loggedIn')
 
     const [signIn, setSignIn] = useState({
         username: "",
@@ -43,7 +44,7 @@ function SignInForm() {
         try{
            const {data} = await axios.post('dj-rest-auth/login/', signIn);
            setCurrentUser(data.user);
-            history.push('/')
+            history.goBack();
         }catch(errors){
             setErrors(errors.response?.data);
         }

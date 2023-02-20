@@ -1,6 +1,8 @@
 import React from 'react'
 import styles from '../styles/NavBar.module.css'
-import {Container, Nav, Navbar} from 'react-bootstrap';
+import Container from 'react-bootstrap/Container';
+import Navbar from 'react-bootstrap/Navbar';
+import Nav from 'react-bootstrap/Nav';
 import icon from '../assets/marketplace-icon.png'
 import { NavLink } from 'react-router-dom';
 import { useCurrentUser, useSetCurrentUser } from '../contexts/CurrentUserContext';
@@ -19,7 +21,7 @@ const NavBar = () => {
       await axios.post('dj-rest-auth/logout/')
       setCurrentUser(null);
     }catch(err){
-      console.log(err)
+      // console.log(err)
 
     }
   }

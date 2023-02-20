@@ -18,8 +18,8 @@ const handleMount = async() => {
   try{
     const {data} = await axiosRes.get('dj-rest-auth/user/')
     setCurrentUser(data)
-  }catch(errors){
-    console.log(errors)
+  }catch(err){
+    // console.log(err)
   }
 };
 

@@ -13,9 +13,9 @@ root.render(
     <Router>
       <CurrentUserProvider>
         <ProfileDataProvider>
-    <App />
-    </ProfileDataProvider>
-    </CurrentUserProvider>
+          <App />
+        </ProfileDataProvider>
+      </CurrentUserProvider>
     </Router>
   </React.StrictMode>
 );

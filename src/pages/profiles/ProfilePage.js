@@ -16,6 +16,10 @@ import { useParams } from "react-router-dom/cjs/react-router-dom.min";
 import { axiosReq } from "../../api/axiosDefaults";
 import { useProfileData, useSetProfileData } from "../../contexts/ProfileDataContext";
 import { Button, Image } from "react-bootstrap";
+import InfiniteScroll from "react-infinite-scroll-component";
+import Products from "../products/Products";
+import { fetchMoreData } from "../../utils/utils";
+import noResults from '../../assets/noResults.jpg'
 
 function ProfilePage() {
   const [hasLoaded, setHasLoaded] = useState(false);
@@ -23,21 +27,23 @@ function ProfilePage() {
   const {id} = useParams();
   const setProfileData = useSetProfileData();
   const {pageProfile} = useProfileData();
-  const [profile] = pageProfile.results
+  const [profile] = pageProfile.results;
+  const [products] = pageProfile.results;
   const is_owner = currentUser?.username === profile?.owner;
-  const [profilePosts, setProfilePosts] = useState({results: []})
+  const [profileProduct, setProfileProduct] = useState({results: []})
 
   useEffect(() => {
     const fetchData = async() =>{
         try{
-            const [{data: pageProfile}] = await Promise.all([
+            const [{data: pageProfile}, {data: profileProduct}] = await Promise.all([
                 axiosReq.get(`/profiles/${id}/`),
-                axiosReq.get(`/posts/?owner__profile=${id}`)
+                axiosReq.get(`/products/?owner__profile=${id}`)
             ])
             setProfileData(prevState =>({
                 ...prevState, 
                 pageProfile: {results: [pageProfile]} 
             }))
+            setProfileProduct(profileProduct);
             setHasLoaded(true);
         }catch(err){
             console.log(err)
@@ -85,11 +91,23 @@ function ProfilePage() {
     </>
   );
 
-  const mainProfilePosts = (
+  const mainProfileProducts = (
     <>
       <hr />
-      <p className="text-center">Profile owner's posts</p>
+      <p className="text-center">{profile?.owner}'s insertions</p>
       <hr />
+      {profileProduct.results.length ? (
+        <InfiniteScroll children={profileProduct.results.map(product =>(
+            <Products key={product.id} {...product} setProfileProduct={profileProduct}/>
+        ))}
+        dataLength={profileProduct.results.length}
+        loader={<Asset spinner />}
+        hasMore={!!profileProduct.next}
+        next={()=>{fetchMoreData(profileProduct, setProfileData)}} />
+       
+      ):(
+        <Asset src={noResults} message={`No results found, ${profile?.owner} hasn't posted yet.`}/>
+      )}
     </>
   );
 
@@ -101,7 +119,7 @@ function ProfilePage() {
           {hasLoaded ? (
             <>
               {mainProfile}
-              {mainProfilePosts}
+              {mainProfileProducts}
             </>
           ) : (
             <Asset spinner />

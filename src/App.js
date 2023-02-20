@@ -13,6 +13,9 @@ import ProductsPage from './pages/products/ProductsLIst';
 import ProductEditForm from './pages/products/ProductEditForm';
 import CommentEditForm from './pages/comments/CommentEditForm';
 import ProfilePage from './pages/profiles/ProfilePage';
+import UsernameForm from "./pages/profiles/UsernameForm";
+import UserPasswordForm from "./pages/profiles/UserPasswordForm";
+import ProfileEditForm from "./pages/profiles/ProfileEditForm";
 
 function App() {
 const currentUser = useCurrentUser();
@@ -33,6 +36,9 @@ const profile_id = currentUser?.profile_id || "";
           <Route exact path='/product' render={() => <Products/>} />
           <Route exact path='/product/:id' render={() => <ProductPage/>} />
           <Route exact path='/profiles/:id' render={() => <ProfilePage/>} />
+          <Route exact path="/profiles/:id/edit/username" render={() => <UsernameForm />}/>
+          <Route exact path="/profiles/:id/edit/password" render={() => <UserPasswordForm />} />
+          <Route exact path="/profiles/:id/edit" render={() => <ProfileEditForm />} />
           <Route render={() => <p>Page not found</p>} />
         </Switch>
       </Container>

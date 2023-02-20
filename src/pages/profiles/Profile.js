@@ -6,7 +6,7 @@ import { Link } from 'react-router-dom';
 import Avatar from '../../components/Avatar';
 import { Button } from 'react-bootstrap';
 import { useSetProfileData } from '../../contexts/ProfileDataContext';
-han
+
 
 const Profile = (props) => {
     const {

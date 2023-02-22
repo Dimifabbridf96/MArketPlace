@@ -28,7 +28,7 @@ const profile_id = currentUser?.profile_id || "";
         <Switch>
           <Route exact path='/' render={() => <ProductsPage message="No result found, please try other search keyboard 🤔"/>}/>
           <Route exact path='/followed' render={() => <ProductsPage message="No result found, please try other search keyboard or follow a profile 🤔" filter={`owner__followed__owner__profile=${profile_id}&`}/>}/>
-          <Route exact path='/liked' render={() => <ProductsPage message="No result found, please try other search keyboard or like a post 🤔" filter={`likes__owner__profile=${profile_id}&ordering=-likes__created_at&`}/>}/>
+          <Route exact path='/liked' render={() => <ProductsPage message="No result found, please try other search keyboard or like a post 🤔" filter={`liked__owner__profile=${profile_id}&ordering=-likes__created_at&`}/>}/>
           <Route exact path='/signin' render={() => <SignInForm/>}/>
           <Route exact path='/signup' render={() => <SignUpForm/>}/>
           <Route exact path='/product/create' render={() => <ProductCreateForm/>} />

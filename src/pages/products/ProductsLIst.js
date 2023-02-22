@@ -14,7 +14,6 @@ import InfiniteScroll from "react-infinite-scroll-component";
 import { fetchMoreData } from "../../utils/utils";
 import PopularProfiles from "../profiles/PopularProfiles";
 import { useCurrentUser } from "../../contexts/CurrentUserContext";
-import CategorySelector from "../../components/CategorySelector";
 
 function ProductsPage({message, filter=""}) {
     const [products, setProducts] = useState({results: []});
@@ -22,12 +21,11 @@ function ProductsPage({message, filter=""}) {
     const {pathname} = useLocation();
     const [query, setQuery] = useState("");
     const currentUser = useCurrentUser();
-    const [category, setCategory] = useState("");
   
     useEffect(() => {
         const fetchProducts = async () => {
           try {
-            const { data } = await axiosReq.get(`/products/?${filter} search=${query}&category=${category}`);
+            const { data } = await axiosReq.get(`/products/?${filter} search=${query}`);
             setProducts(data);
             setHasLoaded(true);
           } catch (err) {
@@ -42,15 +40,8 @@ function ProductsPage({message, filter=""}) {
         return () => {
           clearTimeout(timer);
         };
-  }, [filter, query, pathname, currentUser, category]);
+  }, [filter, query, pathname, currentUser]);
 
-  const handleCategoryFilter = (event)=>{
-    if (event.target.value === ''){
-        setCategory("");
-    } else {
-        setCategory(event.target.value);
-    }
-}
 
 
 //const filterCategories = [
@@ -81,10 +72,6 @@ function ProductsPage({message, filter=""}) {
             className="mr-sm-2"
             placeholder="Search products"
           />
-          <Form.Group controlId="categoryFilter">
-            <Form.Label>Filter by Category</Form.Label>
-           <CategorySelector onChange={handleCategoryFilter} id='categoryFilter'/>
-          </Form.Group>
         </Form>
         {hasLoaded ? (
           <>

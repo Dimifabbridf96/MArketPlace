@@ -36,6 +36,7 @@ const NavBar = () => {
   </>
   const loggedInIcons = <>
     <NavLink  className={styles.NavLink} activeClassName={styles.Active}to='/liked' > <i className="fa-solid fa-heart-circle-bolt"></i> Liked</NavLink>
+    <NavLink  className={styles.NavLink} activeClassName={styles.Active}to='/followed' > <i className="fas fa-stream"></i> Followed</NavLink>
 
     <NavLink  className={styles.NavLink} activeClassName={styles.Active}to='/' onClick={HandleSignOut} > <i className="fa-solid fa-person-walking-dashed-line-arrow-right"></i> Sign Out</NavLink>
 

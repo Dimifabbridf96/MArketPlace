@@ -89,7 +89,6 @@ function ProfilePage() {
                     <Button className={`${btnStyles.Button}`} onClick={() => handleFollow(profile)}> Follow</Button>
                 )
             )}
-        <p>Follow button</p>
         </Col>
         {profile?.content &&  <Col className="p-3">{profile.content}</Col>}
       </Row>

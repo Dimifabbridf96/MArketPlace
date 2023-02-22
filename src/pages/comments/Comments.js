@@ -27,7 +27,7 @@ const Comments = (props) => {
 
     const handleDelete = async() =>{
       try{
-      await axiosRes.delete(`/comments/${id}/`)
+      await axiosRes.delete(`/comments/${id}`)
       setProduct(prevProduct => ({
         results: [{
           ...prevProduct.results[0],

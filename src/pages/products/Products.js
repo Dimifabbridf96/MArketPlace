@@ -105,15 +105,15 @@ const Products = (props) => {
               placement="top"
               overlay={<Tooltip>Autolike not allowed !</Tooltip>}
             >
-              <i className={`fa-regular fa-circle-up ${styles.Neutral}`} />
+              <i className={`fa-regular fa-circle-up`} />
             </OverlayTrigger>
           ) : like_id ? (
-            <span onClick={() => handleUnlike }>
+            <span onClick={handleUnlike }>
               <i className={`fa-regular fa-circle-up ${styles.Upvote}`} />
             </span>
           ) : currentUser ? (
-            <span onClick={() => handleLike}>
-              <i className={`fa-solid fa-circle-up ${styles.Upvote}`} />
+            <span onClick={handleLike}>
+              <i className={`fa-solid fa-circle-up ${styles.Neutral}`} />
             </span>
           ) : (
             <OverlayTrigger

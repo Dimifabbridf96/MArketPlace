@@ -26,6 +26,7 @@ export const followerHelper = (profile, clickedProfile, following_id) =>{
 export const unfollowerHelper = (profile, clickedProfile) =>{
   return profile.id === clickedProfile.id ?{
     ...profile, followers_count: profile.followers_count -1,
+    following_id: null,
   }: profile.is_owner ? {
     ...profile, following_count: profile.following_count -1,
   }: profile;

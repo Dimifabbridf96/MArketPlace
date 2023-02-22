@@ -10,33 +10,33 @@ import { axiosRes } from "../../api/axiosDefaults";
 
 
 function CommentCreateForm(props) {
-  const { post, setPost, setComments, profileImage, profile_id } = props;
-  const [content, setContent] = useState("");
+  const { product, setProduct, setComments, profileImage, profile_id } = props;
+  const [comment, setComment] = useState("");
 
   const handleChange = (event) => {
-    setContent(event.target.value);
+    setComment(event.target.value);
   };
 
   const handleSubmit = async (event) => {
     event.preventDefault();
     try {
       const { data } = await axiosRes.post("/comments/", {
-        content,
-        post,
+        comment,
+        product,
       });
       setComments((prevComments) => ({
         ...prevComments,
         results: [data, ...prevComments.results],
       }));
-      setPost((prevPost) => ({
+      setProduct((prevProduct) => ({
         results: [
           {
-            ...prevPost.results[0],
-            comments_count: prevPost.results[0].comments_count + 1,
+            ...prevProduct.results[0],
+            comments_count: prevProduct.results[0].comments_count + 1,
           },
         ],
       }));
-      setContent("");
+      setComment("");
     } catch (err) {
       // console.log(err);
     }
@@ -53,7 +53,7 @@ function CommentCreateForm(props) {
             className={styles.Form}
             placeholder="my comment..."
             as="textarea"
-            value={content}
+            value={comment}
             onChange={handleChange}
             rows={2}
           />
@@ -61,7 +61,7 @@ function CommentCreateForm(props) {
       </Form.Group>
       <button
         className={`${styles.Button} btn d-block ml-auto`}
-        disabled={!content.trim()}
+        disabled={!comment.trim()}
         type="submit"
       >
         post

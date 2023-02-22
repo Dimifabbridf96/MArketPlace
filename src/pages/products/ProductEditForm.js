@@ -164,7 +164,7 @@ const { id } = useParams();
                   <figure>
                     <Image className={appStyles.Product} src={image} rounded />
                   </figure>
-                  <div justify-content-center>
+                  <div className="justify-content-center" >
                     <Form.Label
                       className={`${btnStyles.Button} ${btnStyles.Blue} btn`}
                       htmlFor="image-upload"

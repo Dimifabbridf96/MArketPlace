@@ -1,5 +1,4 @@
 import React, { useRef, useState } from "react";
-
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import Row from "react-bootstrap/Row";
@@ -15,17 +14,21 @@ import Asset from "../../components/Asset";
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 import { Alert } from "bootstrap";
 import { useRedirect } from "../../hooks/useRedirect";
+import CategorySelector from "../../components/CategorySelector";
 
 function ProductCreateForm() {
+  useRedirect('loggedOut')
   const [productCreation, setProductCreation] = useState({
     title: "",
     description: "",
     image: "",
-    category:"",
+    category:"Other",
     price: "",
   });
-const {title, description, image, category, price} = productCreation;
-useRedirect('loggedOut')
+const {title, description, image, category, price} = productCreation; 
+
+const [errors, setErrors] = useState({});
+
 
 const imageInput = useRef(null)
 const history = useHistory()
@@ -69,7 +72,7 @@ const history = useHistory()
   }
 
   
-  const [errors, setErrors] = useState({});
+ 
 
 
   const textFields = (
@@ -94,9 +97,9 @@ const history = useHistory()
         </Alert>
       ))}
 
-    <Form.Group controlId="category">
+   <Form.Group controlId="category">
         <Form.Label>Category</Form.Label>
-        <select name="category" className={styles.Margin} value={category} onChange={handleChange}>
+        <Form.Control as='select' name="category" value={description} onChange={handleChange} >
           <option value='Other'>Other</option>
           <option value='Beauty'>Beauty</option>
           <option value='Home & Garden'>Home & Garden</option>
@@ -106,23 +109,15 @@ const history = useHistory()
           <option value='Books'>Books</option>
           <option value='Electronics'>Electronics</option>
           <option value='Car & Motorbike'>Car & Motorbike</option>
-        </select>
+        </Form.Control>
     </Form.Group>
-    {errors?.category?.map((message, idx) => (
-        <Alert variant="warning" key={idx}>
-          {message}
-        </Alert>
-      ))}
+    
 
     <Form.Group controlId="price">
     <Form.Label>Price</Form.Label>
     <Form.Control type="number" min="0" max="99999999"  step="0.01" placeholder="Insert Your Price " name="price" value={price} onChange={handleChange} />
-    </Form.Group>
-    {errors?.price?.map((message, idx) => (
-        <Alert variant="warning" key={idx}>
-          {message}
-        </Alert>
-      ))}
+    </Form.Group> 
+   
         
     
       <Button
@@ -149,9 +144,9 @@ const history = useHistory()
                   <figure>
                     <Image className={appStyles.Product} src={image} rounded />
                   </figure>
-                  <div justify-content-center>
+                  <div className="justify-content-center" >
                     <Form.Label
-                      className={`${btnStyles.Button} ${btnStyles.Blue} btn`}
+                      className={`${btnStyles.Button} ${btnStyles.Blue}`}
                       htmlFor="image-upload"
                     >
                       Change the image

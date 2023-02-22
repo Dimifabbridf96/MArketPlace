@@ -27,7 +27,7 @@ const [comments, setComments] = useState({ results: [] });
     const handleMount = async () => {
       try {
         const [{ data: product }, {data: comments}] = await Promise.all([
-          axiosReq.get(`/product/${id}`),
+          axiosReq.get(`/products/${id}`),
           axiosReq.get(`/comments/?product=${id}`)
         ]);
         setProduct({ results: [product] });
@@ -52,7 +52,7 @@ const [comments, setComments] = useState({ results: [] });
   <CommentCreateForm
   profile_id={currentUser.profile_id}
   profileImage={profile_image}
-  post={id}
+  product={id}
   setProduct={setProduct}
   setComments={setComments}
 />

@@ -90,7 +90,7 @@ const Products = (props) => {
             </div>
           </Media>
         </Card.Body>
-        <Link to={`/products/${id}`}>
+        <Link to={`/product/${id}`}>
           <Card.Img src={image} alt={title} />
         </Link>
         <Card.Body>
@@ -98,7 +98,6 @@ const Products = (props) => {
           {description && <Card.Text>{description}</Card.Text>}
           {category && <Card.Title className="text-center">{category}</Card.Title>}
           {category && <Card.Text>{category}</Card.Text>}
-        {price && <Card.Title className="text-center">{price}</Card.Title>}
           {price && <Card.Text>{price}</Card.Text>}
           <div>
           {is_owner ? (

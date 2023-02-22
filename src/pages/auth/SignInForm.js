@@ -32,10 +32,11 @@ function SignInForm() {
     const [errors, setErrors] = useState({});
 
     const history = useHistory();
+
     const handleChange = (event) =>{
         setSignIn({
             ...signIn,
-            [event.target.name]: event.target.value
+            [event.target.name]: event.target.value,
         });
     };
 

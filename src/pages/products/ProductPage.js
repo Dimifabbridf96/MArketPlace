@@ -45,7 +45,7 @@ const [comments, setComments] = useState({ results: [] });
   return (
     <Row className="h-100">
       <Col className="py-2 p-0 p-lg-2" lg={8}>
-        <popularProfiles mobile />
+        <PopularProfiles mobile />
         <Products {...product.results[0]} setProduct={setProduct} productPage/>
         <Container className={appStyles.Content}>
         {currentUser ? (

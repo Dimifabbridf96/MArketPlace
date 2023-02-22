@@ -27,8 +27,8 @@ export const ProfileDataProvider = ({children}) =>{
             pageProfile: {
               results: prevState.pageProfile.results.map((profile) => followerHelper(profile, clickedProfile, data.id)),
             }, 
-            PopularProfiles: {
-              ...prevState.PopularProfiles,
+            popularProfiles: {
+              ...prevState.popularProfiles,
               results: prevState.popularProfiles.results.map((profile) =>followerHelper(profile, clickedProfile, data.id)
               )
             }
@@ -46,8 +46,8 @@ export const ProfileDataProvider = ({children}) =>{
             pageProfile: {
               results: prevState.pageProfile.results.map((profile) => unfollowerHelper(profile, clickedProfile)),
             }, 
-            PopularProfiles: {
-              ...prevState.PopularProfiles,
+            popularProfiles: {
+              ...prevState.popularProfiles,
               results: prevState.popularProfiles.results.map((profile) =>unfollowerHelper(profile, clickedProfile)
               )
             }
@@ -62,7 +62,7 @@ export const ProfileDataProvider = ({children}) =>{
           try{
             const {data} = await axiosReq.get(`/profiles/?ordering=-followers_count`);
             setProfileData(prevState =>({
-              ...prevState, PopularProfiles: data,
+              ...prevState, popularProfiles: data,
             }))
           }catch(err){
               // console.log(err)

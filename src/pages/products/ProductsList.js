@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState } from "react";
 import { axiosReq } from "../../api/axiosDefaults";
 import Form from "react-bootstrap/Form";
 import Col from "react-bootstrap/Col";
@@ -13,14 +13,16 @@ import Asset from "../../components/Asset";
 import InfiniteScroll from "react-infinite-scroll-component";
 import { fetchMoreData } from "../../utils/utils";
 import PopularProfiles from "../profiles/PopularProfiles";
-import CategorySelector from '../../components/CategorySelector';
+import { useCurrentUser } from "../../contexts/CurrentUserContext";
 
-const CategoryFilter = ({message, filter=""}) => {
+function ProductsPage({message, filter=""}) {
     const [products, setProducts] = useState({results: []});
     const [hasLoaded, setHasLoaded] = useState(false);
     const {pathname} = useLocation();
     const [query, setQuery] = useState("");
 
+    const currentUser = useCurrentUser();
+  
     useEffect(() => {
         const fetchProducts = async () => {
           try {
@@ -32,16 +34,33 @@ const CategoryFilter = ({message, filter=""}) => {
           }
         };
         setHasLoaded(false);
-        fetchProducts();
-    }, [filter, query, pathname]);
+        const timer = setTimeout(() => {
+          fetchProducts();
+        }, 1000);
+    
+        return () => {
+          clearTimeout(timer);
+        };
+  }, [filter, query, pathname, currentUser,]);
+
 
   return (
     <Row className="h-100">
       <Col className="py-2 p-0 p-lg-2" lg={8}>
         <PopularProfiles mobile />
-          <Form.Group>
-      <CategorySelector value={query} onChange={(event) =>setQuery(event.target.value)}/>
-</Form.Group>
+        <i className={`fa-solid fa-magnifying-glass ${styles.SearchIcon}`}/>
+        <Form
+          className={styles.SearchBar}
+          onSubmit={(event) => event.preventDefault()}
+        >
+          <Form.Control
+            value={query}
+            onChange={(event) => setQuery(event.target.value)}
+            type="text"
+            className="mr-sm-2"
+            placeholder="Search products"
+          />
+        </Form>
         {hasLoaded ? (
           <>
             {products.results.length ? (
@@ -71,6 +90,5 @@ const CategoryFilter = ({message, filter=""}) => {
     </Row>
   );
 }
-  
 
-export default CategoryFilter
+export default ProductsPage;

@@ -9,7 +9,7 @@ import ProductCreateForm from './pages/products/ProductCreateForm';
 import ProductPage from './pages/products/ProductPage';
 import Products from './pages/products/Products';
 import { useCurrentUser } from './contexts/CurrentUserContext';
-import ProductsPage from './pages/products/ProductsLIst';
+import ProductsPage from './pages/products/ProductsList';
 import ProductEditForm from './pages/products/ProductEditForm';
 import CommentEditForm from './pages/comments/CommentEditForm';
 import ProfilePage from './pages/profiles/ProfilePage';
@@ -17,7 +17,7 @@ import UsernameForm from "./pages/profiles/UsernameForm";
 import UserPasswordForm from "./pages/profiles/UserPasswordForm";
 import ProfileEditForm from "./pages/profiles/ProfileEditForm";
 import NotFound from './components/NotFound';
-import CategoryFilter from './pages/products/CategoryFilter';
+import CategoryFilter from './pages/filters/CategoryFilter';
 
 function App() {
 const currentUser = useCurrentUser();

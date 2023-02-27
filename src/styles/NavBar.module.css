@@ -25,6 +25,9 @@ a, i{
 .NavLink{
     padding: 5px;
 }
+.NoHover:hover{
+    font-size: 100%;
+}
 
 .Active i {
     color: #003366

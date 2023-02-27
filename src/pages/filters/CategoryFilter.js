@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState } from 'react'
 import { axiosReq } from "../../api/axiosDefaults";
 import Form from "react-bootstrap/Form";
 import Col from "react-bootstrap/Col";
@@ -7,29 +7,24 @@ import Container from "react-bootstrap/Container";
 import appStyles from "../../App.module.css";
 import styles from "../../styles/ProductsList.module.css";
 import { useLocation } from "react-router-dom/cjs/react-router-dom.min";
-import Products from "./Products";
+import Products from "../products/Products";
 import NoResults from "../../assets/noResults.jpg";
 import Asset from "../../components/Asset";
 import InfiniteScroll from "react-infinite-scroll-component";
 import { fetchMoreData } from "../../utils/utils";
 import PopularProfiles from "../profiles/PopularProfiles";
-import { useCurrentUser } from "../../contexts/CurrentUserContext";
-import CategorySelector from "../../components/CategorySelector";
+import CategorySelector from '../../components/CategorySelector';
 
-function ProductsPage({message, filter=""}) {
+const CategoryFilter = ({message, filter=""}) => {
     const [products, setProducts] = useState({results: []});
     const [hasLoaded, setHasLoaded] = useState(false);
     const {pathname} = useLocation();
     const [query, setQuery] = useState("");
-    const [category, setCategory] = useState("");
-    const [ price, setPrice ] = useState();
 
-    const currentUser = useCurrentUser();
-  
     useEffect(() => {
         const fetchProducts = async () => {
           try {
-            const { data } = await axiosReq.get(`/products/?${filter}search=${query}&price=${price}&category=${category}`);
+            const { data } = await axiosReq.get(`/products/?${filter}search=${query}`);
             setProducts(data);
             setHasLoaded(true);
           } catch (err) {
@@ -37,49 +32,16 @@ function ProductsPage({message, filter=""}) {
           }
         };
         setHasLoaded(false);
-        const timer = setTimeout(() => {
-          fetchProducts();
-        }, 1000);
-    
-        return () => {
-          clearTimeout(timer);
-        };
-  }, [filter, query, pathname, currentUser, price, category]);
-
-  const filterPrice = (e)=>{
-    setPrice(parseInt( e.target.value ));
-  }
-
+        fetchProducts();
+    }, [filter, query, pathname]);
 
   return (
     <Row className="h-100">
       <Col className="py-2 p-0 p-lg-2" lg={8}>
         <PopularProfiles mobile />
-        <i className={`fa-solid fa-magnifying-glass ${styles.SearchIcon}`}/>
-        <Form
-          className={styles.SearchBar}
-          onSubmit={(event) => event.preventDefault()}
-        >
-          <Form.Control
-            value={query}
-            onChange={(event) => setQuery(event.target.value)}
-            type="text"
-            className="mr-sm-2"
-            placeholder="Search products"
-          />
-          <Form.Control
-        type='range'
-        onChange={filterPrice}
-        min={1}
-        max={1000}
-        step={1}
-        value={price}
-        />
-        <h1> Price: {price}</h1>
-        <hr />
-
-        <CategorySelector value={category} onChange={(e) => setCategory(e.target.value)} />
-        </Form>
+          <Form.Group>
+      <CategorySelector value={query} onChange={(event) =>setQuery(event.target.value)}/>
+</Form.Group>
         {hasLoaded ? (
           <>
             {products.results.length ? (
@@ -109,5 +71,6 @@ function ProductsPage({message, filter=""}) {
     </Row>
   );
 }
+  
 
-export default ProductsPage;
+export default CategoryFilter

@@ -1,24 +1,48 @@
-import React from 'react'
+import React, { useState } from 'react'
 import Media from 'react-bootstrap/Media';
+import { Link } from 'react-router-dom';
+import { axiosRes } from '../../api/axiosDefaults';
+import Avatar from '../../components/Avatar';
 import { MoreDropdown } from '../../components/MoreDropdown';
 import { useCurrentUser } from '../../contexts/CurrentUserContext';
+import ReviewsEditForm from './ReviewsEditForm';
+import styles from '../../styles/Comment.module.css'
+
 
 
 const Reviews = (props) => {
     const{
         owner,
-        created_at,
         updated_at,
-        product,
         review,
         profile_id,
         profile_image,
+        setProduct,
+        setReview,
         id,
     }= props;
 
-    const [showEditForm, setShowEditForm] = useState(false);
+    const [showEditForm, setShowEdit] = useState(false);
     const currentUser = useCurrentUser();
     const is_owner = currentUser?.username === owner;
+
+    const handleDelete = async() =>{
+      try{
+      await axiosRes.delete(`/reviews/${id}`)
+      setProduct(prevProduct => ({
+        results: [{
+          ...prevProduct.results[0],
+          reviews_count: prevProduct.results[0].reviews_count - 1
+        }]
+      }))
+        setReview(prevReview => ({
+          ...prevReview, results: prevReview.results.filter((review) => review.id !== id), 
+          }))
+      }
+      catch(err){
+        // console.log(err)
+      }
+}
 
 
   return (
@@ -38,10 +62,16 @@ const Reviews = (props) => {
               review={review}
               profileImage={profile_image}
               setReview={setReview}
-              setShowEditForm={setShowEditForm}
+              setShowEdit={setShowEdit}
             />
             ):(<p> { review }/5 🌟</p>)}
             </Media.Body>
+            {is_owner && !showEditForm && (
+            <MoreDropdown
+              handleEdit={() => setShowEdit(true)}
+              handleDelete={handleDelete}
+            />
+            )}
         </Media>
     </>
   )

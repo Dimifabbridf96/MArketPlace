@@ -1,18 +1,48 @@
-import React from 'react'
+import React, { useState } from 'react'
 import  Form  from 'react-bootstrap/Form'
+import { axiosRes } from '../../api/axiosDefaults';
+import styles from "../../styles/CommentCreateEditForm.module.css";
+
 
 const ReviewsEditForm = (props) => {
-    const{ id, review, setShowEdit, setReview} = props;
+    const{ id, review, setShowEdit, setReviews} = props;
 
     const [formReview, setFormReview] = useState(review);
 
+    const handleChange = (event) => {
+      setFormReview(event.target.value);
+    };
+
+    const handleSubmit = async (event) => {
+      event.preventDefault();
+      try {
+        await axiosRes.put(`/reviews/${id}`, {
+          review: formReview,
+        });
+        setReviews((prevReviews) => ({
+          ...prevReviews,
+          results: prevReviews.results.map((review) => {
+            return review.id === id
+              ? {
+                  ...review,
+                  review: formReview,
+                  updated_at: "now",
+                }
+              : review;
+          }),
+        }));
+        setShowEdit(false);
+      } catch (err) {
+        // console.log(err);
+      }
+    };
 
   return (
-    <Form>
+    <Form onSubmit={handleSubmit}>
         <Form.Group className='pr-1'>
-            <From.Control
+            <Form.Control
             className={styles.Form}
-            as='number'
+            type='number'
             min='0'
             max='5'
             step='1'
@@ -24,14 +54,14 @@ const ReviewsEditForm = (props) => {
           <div className="text-right">
         <button
           className={styles.Button}
-          onClick={() => setShowEditForm(false)}
+          onClick={() => setShowEdit(false)}
           type="button"
         >
           cancel
         </button>
         <button
           className={styles.Button}
-          disabled={!comment.trim()}
+          disabled={!review}
           type="submit"
         >
           save

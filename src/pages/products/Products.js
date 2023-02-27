@@ -26,6 +26,7 @@ const Products = (props) => {
         like_id,
         likes_count,
         comments_count,
+        reviews_count,
         productPage,
         setProduct
     } = props;
@@ -127,6 +128,10 @@ const Products = (props) => {
             <i className="far fa-comments" />
           </Link>
           {comments_count}
+          <Link to={`/product/${id}`}>
+            <i className="fa-regular fa-star" />
+          </Link>
+          {reviews_count}
         </div>
         </Card.Body>
         </Card>

@@ -18,6 +18,7 @@ import UserPasswordForm from "./pages/profiles/UserPasswordForm";
 import ProfileEditForm from "./pages/profiles/ProfileEditForm";
 import NotFound from './components/NotFound';
 import CategoryFilter from './pages/filters/CategoryFilter';
+import ReviewsEditForm from './pages/reviews/ReviewsEditForm';
 
 function App() {
 const currentUser = useCurrentUser();
@@ -35,6 +36,7 @@ const profile_id = currentUser?.profile_id || "";
           <Route exact path='/product/create' render={() => <ProductCreateForm/>} />
           <Route exact path='/product/:id/edit' render={() => <ProductEditForm/>} />
           <Route exact path='/comments/:id/edit' render={() => <CommentEditForm/>} />
+          <Route exact path='/reviews/:id/edit' render={() => <ReviewsEditForm/>} />
           <Route exact path='/product' render={() => <Products/>} />
           <Route exact path='/product/:id' render={() => <ProductPage/>} />
           <Route exact path='/profiles/:id' render={() => <ProfilePage/>} />

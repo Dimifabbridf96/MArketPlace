@@ -30,3 +30,13 @@ object-fit: contain;
     border-radius: 2px;
     border: 1px solid #dadadf;
   }
+.Review{
+margin-left: 0.5rem;
+float: right;
+max-width: 47%;
+}
+.Comment{
+margin-right: 0.5rem;
+float: left;
+max-width: 47%;
+}

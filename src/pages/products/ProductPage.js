@@ -13,6 +13,8 @@ import { fetchMoreData } from "../../utils/utils";
 import { useCurrentUser } from "../../contexts/CurrentUserContext";
 import CommentCreateForm from "../comments/CommentCreateForm";
 import PopularProfiles from "../profiles/PopularProfiles";
+import ReviewCreateForm from "../reviews/ReviewCreateForm";
+import Reviews from "../reviews/Reviews";
 
 
 function ProductPage() {
@@ -50,8 +52,9 @@ const [reviews, setReviews] = useState({results: []});
       <Col className="py-2 p-0 p-lg-2" lg={8}>
         <PopularProfiles mobile />
         <Products {...product.results[0]} setProduct={setProduct} productPage/>
-        <Container className={appStyles.Content}>
+        <Container className={`${appStyles.Content} ${appStyles.Comment}`}>
         {currentUser ? (
+          
   <CommentCreateForm
   profile_id={currentUser.profile_id}
   profileImage={profile_image}
@@ -59,9 +62,11 @@ const [reviews, setReviews] = useState({results: []});
   setProduct={setProduct}
   setComments={setComments}
 />
+
 ) : comments.results.length ? (
    "Comments"
 ) : null}
+
 {comments.results.length ? ( 
   <InfiniteScroll children ={comments.results.map(comment =>(
    <Comments key={comment.id} {...comment}
@@ -77,7 +82,41 @@ next={() => fetchMoreData(comments, setComments) }/>
 ): (
   <span>No comment, <a href='/signin'>Log in </a>and be the first</span>
 )}
-        </Container>
+  </Container>
+
+
+  <Container className={`${appStyles.Content} ${appStyles.Review}`}>
+        {currentUser ? (
+          
+  <ReviewCreateForm
+  profile_id={currentUser.profile_id}
+  profileImage={profile_image}
+  product={id}
+  setProduct={setProduct}
+  setReviews={setReviews}
+/>
+
+) : reviews.results.length ? (
+   "Reviews"
+) : null}
+
+{reviews.results.length ? ( 
+  <InfiniteScroll children ={reviews.results.map(review =>(
+   <Reviews key={review.id} {...review}
+   setProduct={setProduct} setReviews={setReviews}/>
+))}
+dataLength={reviews.results.length}
+loader={<Asset spinner />}
+hasMore={!!reviews.next}
+next={() => fetchMoreData(reviews, setReviews) }/>
+  
+) : currentUser ? (
+  <span>No review yet, be the first</span>
+): (
+  <span>No review <a href='/signin'>Log in </a>and be the first</span>
+)}
+
+</Container>
       </Col>
       <Col lg={4} className="d-none d-lg-block p-0 p-lg-2">
         <PopularProfiles />

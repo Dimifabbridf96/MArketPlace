@@ -14,6 +14,7 @@ import InfiniteScroll from "react-infinite-scroll-component";
 import { fetchMoreData } from "../../utils/utils";
 import PopularProfiles from "../profiles/PopularProfiles";
 import CategorySelector from '../../components/CategorySelector';
+import ActiveProfiles from '../profiles/ActiveProfiles';
 
 const CategoryFilter = ({message, filter=""}) => {
     const [products, setProducts] = useState({results: []});
@@ -39,6 +40,7 @@ const CategoryFilter = ({message, filter=""}) => {
     <Row className="h-100">
       <Col className="py-2 p-0 p-lg-2" lg={8}>
         <PopularProfiles mobile />
+        <ActiveProfiles mobile />
           <Form.Group>
       <CategorySelector value={query} onChange={(event) =>setQuery(event.target.value)}/>
 </Form.Group>
@@ -66,7 +68,11 @@ const CategoryFilter = ({message, filter=""}) => {
         )}
       </Col>
       <Col md={4} className="d-none d-lg-block p-0 p-lg-2">
+        <ActiveProfiles />
         <PopularProfiles />
+      </Col>
+      <Col md={4} className="d-none d-lg-block p-0 p-lg-2">
+      <ActiveProfiles />
       </Col>
     </Row>
   );

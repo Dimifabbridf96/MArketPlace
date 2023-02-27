@@ -15,6 +15,7 @@ import CommentCreateForm from "../comments/CommentCreateForm";
 import PopularProfiles from "../profiles/PopularProfiles";
 import ReviewCreateForm from "../reviews/ReviewCreateForm";
 import Reviews from "../reviews/Reviews";
+import ActiveProfiles from "../profiles/ActiveProfiles";
 
 
 function ProductPage() {
@@ -51,6 +52,7 @@ const [reviews, setReviews] = useState({results: []});
     <Row className="h-100">
       <Col className="py-2 p-0 p-lg-2" lg={8}>
         <PopularProfiles mobile />
+        <ActiveProfiles mobile />
         <Products {...product.results[0]} setProduct={setProduct} productPage/>
         <Container className={`${appStyles.Content} ${appStyles.Comment}`}>
         {currentUser ? (
@@ -119,6 +121,7 @@ next={() => fetchMoreData(reviews, setReviews) }/>
 </Container>
       </Col>
       <Col lg={4} className="d-none d-lg-block p-0 p-lg-2">
+        <ActiveProfiles />
         <PopularProfiles />
       </Col>
     </Row>

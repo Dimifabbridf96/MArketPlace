@@ -22,6 +22,7 @@ import Products from "../products/Products";
 import { fetchMoreData } from "../../utils/utils";
 import noResults from '../../assets/noResults.jpg'
 import { ProfileEditDropdown } from "../../components/MoreDropdown";
+import ActiveProfiles from "./ActiveProfiles";
 
 
 
@@ -119,6 +120,7 @@ function ProfilePage() {
     <Row>
       <Col className="py-2 p-0 p-lg-2" lg={8}>
         <PopularProfiles mobile />
+        <ActiveProfiles mobile />
         <Container className={appStyles.Content}>
           {hasLoaded ? (
             <>
@@ -131,6 +133,7 @@ function ProfilePage() {
         </Container>
       </Col>
       <Col lg={4} className="d-none d-lg-block p-0 p-lg-2">
+        <ActiveProfiles />
         <PopularProfiles />
       </Col>
     </Row>

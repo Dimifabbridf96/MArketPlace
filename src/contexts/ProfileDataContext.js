@@ -15,6 +15,7 @@ export const ProfileDataProvider = ({children}) =>{
     const[profileData, setProfileData] = useState({
         pageProfile: { results: []},
         popularProfiles: {results: []},
+        activeProfiles: {results:[]},
       });
       const currentUser = useCurrentUser();
 
@@ -31,7 +32,13 @@ export const ProfileDataProvider = ({children}) =>{
               ...prevState.popularProfiles,
               results: prevState.popularProfiles.results.map((profile) =>followerHelper(profile, clickedProfile, data.id)
               )
-            }
+            },
+            activeProfiles: {
+              ...prevState.activeProfiles,
+              results: prevState.activeProfiles.results.map((profile) =>
+                followerHelper(profile, clickedProfile, data.id)
+              ),
+            },
           }));
         }catch(err){
           // console.log(err)
@@ -50,7 +57,13 @@ export const ProfileDataProvider = ({children}) =>{
               ...prevState.popularProfiles,
               results: prevState.popularProfiles.results.map((profile) =>unfollowerHelper(profile, clickedProfile)
               )
-            }
+            },
+            activeProfiles: {
+              ...prevState.activeProfiles,
+              results: prevState.activeProfiles.results.map((profile) =>
+                unfollowerHelper(profile, clickedProfile)
+              ),
+            },
           }));
         }catch(err){
           // console.log(err)
@@ -70,6 +83,22 @@ export const ProfileDataProvider = ({children}) =>{
         }
         HandleMount()
       }, [currentUser])
+
+      useEffect(() => {
+        const HandleMount = async() =>{
+          try{
+            const {data} = await axiosReq.get(`/profiles/?ordering=-products_count`);
+            setProfileData(prevState =>({
+              ...prevState, activeProfiles: data,
+            }))
+          }catch(err){
+              // console.log(err)
+          }
+        }
+        HandleMount()
+      }, [currentUser])
+
+
 
 
 

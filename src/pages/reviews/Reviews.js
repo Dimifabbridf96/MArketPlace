@@ -1,4 +1,8 @@
 import React from 'react'
+import Media from 'react-bootstrap/Media';
+import { MoreDropdown } from '../../components/MoreDropdown';
+import { useCurrentUser } from '../../contexts/CurrentUserContext';
+
 
 const Reviews = (props) => {
     const{
@@ -12,6 +16,10 @@ const Reviews = (props) => {
         id,
     }= props;
 
+    const [showEditForm, setShowEditForm] = useState(false);
+    const currentUser = useCurrentUser();
+    const is_owner = currentUser?.username === owner;
+
 
   return (
     <>
@@ -23,7 +31,16 @@ const Reviews = (props) => {
           <Media.Body className="align-self-center ml-2">
             <span className={styles.Owner}>{owner}</span>
             <span className={styles.Date}>{updated_at}</span>
-            <p> { review }</p>
+            {showEditForm ? (
+              <ReviewsEditForm
+              id={id}
+              profile_id={profile_id}
+              review={review}
+              profileImage={profile_image}
+              setReview={setReview}
+              setShowEditForm={setShowEditForm}
+            />
+            ):(<p> { review }/5 🌟</p>)}
             </Media.Body>
         </Media>
     </>

@@ -17,6 +17,7 @@ import UsernameForm from "./pages/profiles/UsernameForm";
 import UserPasswordForm from "./pages/profiles/UserPasswordForm";
 import ProfileEditForm from "./pages/profiles/ProfileEditForm";
 import NotFound from './components/NotFound';
+import CategoryFilter from './pages/products/CategoryFilter';
 
 function App() {
 const currentUser = useCurrentUser();
@@ -40,6 +41,7 @@ const profile_id = currentUser?.profile_id || "";
           <Route exact path="/profiles/:id/edit/username" render={() => <UsernameForm />}/>
           <Route exact path="/profiles/:id/edit/password" render={() => <UserPasswordForm />} />
           <Route exact path="/profiles/:id/edit" render={() => <ProfileEditForm />} />
+          <Route exact path="/category" render={() => <CategoryFilter />} />
           <Route render={() => <NotFound/>} />
         </Switch>
       </Container>

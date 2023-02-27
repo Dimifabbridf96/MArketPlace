@@ -39,6 +39,7 @@ const NavBar = () => {
     <NavLink  className={styles.NavLink} activeClassName={styles.Active}to='/followed' > <i className="fas fa-stream"></i> Followed</NavLink>
 
     <NavLink  className={styles.NavLink} activeClassName={styles.Active}to='/' onClick={HandleSignOut} > <i className="fa-solid fa-person-walking-dashed-line-arrow-right"></i> Sign Out</NavLink>
+    <NavLink  className={styles.NavLink} activeClassName={styles.Active}to='/category'> <i className="fa-solid fa-person-walking-dashed-line-arrow-right"></i> Category</NavLink>
 
     <NavLink  className={styles.NavLink} activeClassName={styles.Active}to={`/profiles/${currentUser?.profile_id}`} > <Avatar src={currentUser?.profile_image} text='Profile'/></NavLink>
 

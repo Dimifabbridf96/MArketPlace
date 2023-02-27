@@ -12,8 +12,31 @@ const ReviewsEditForm = (props) => {
         <Form.Group className='pr-1'>
             <From.Control
             className={styles.Form}
-            as=''
-        </Form.Group>
+            as='number'
+            min='0'
+            max='5'
+            step='1'
+            placeholder="Insert Your Review "
+            value={formReview}
+            onChange={handleChange}
+            />
+          </Form.Group>
+          <div className="text-right">
+        <button
+          className={styles.Button}
+          onClick={() => setShowEditForm(false)}
+          type="button"
+        >
+          cancel
+        </button>
+        <button
+          className={styles.Button}
+          disabled={!comment.trim()}
+          type="submit"
+        >
+          save
+        </button>
+      </div>
     </Form>
   )
 }

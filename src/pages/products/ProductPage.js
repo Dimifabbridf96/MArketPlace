@@ -22,16 +22,19 @@ function ProductPage() {
   const currentUser = useCurrentUser();
 const profile_image = currentUser?.profile_image;
 const [comments, setComments] = useState({ results: [] });
+const [reviews, setReviews] = useState({results: []});
 
   useEffect(() => {
     const handleMount = async () => {
       try {
-        const [{ data: product }, {data: comments}] = await Promise.all([
+        const [{ data: product }, {data: comments}, {data: reviews}] = await Promise.all([
           axiosReq.get(`/products/${id}`),
-          axiosReq.get(`/comments/?product=${id}`)
+          axiosReq.get(`/comments/?product=${id}`),
+          axiosReq.get(`/reviews/?product=${id}`)
         ]);
         setProduct({ results: [product] });
         setComments(comments);
+        setReviews(reviews);
       } catch (err) {
         // console.log(err);
       }

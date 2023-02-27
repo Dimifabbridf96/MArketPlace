@@ -115,7 +115,7 @@ const history = useHistory()
 
     <Form.Group controlId="price">
     <Form.Label>Price</Form.Label>
-    <Form.Control type="number" min="0" max="99999999"  step="0.01" placeholder="Insert Your Price " name="price" value={price} onChange={handleChange} />
+    <Form.Control type="number" min="0" max="1000"  step="1" placeholder="Insert Your Price " name="price" value={price} onChange={handleChange} />
     </Form.Group> 
    
         

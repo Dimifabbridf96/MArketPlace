@@ -20,12 +20,13 @@ function ProductsPage({message, filter=""}) {
     const [hasLoaded, setHasLoaded] = useState(false);
     const {pathname} = useLocation();
     const [query, setQuery] = useState("");
+    const [ price, setPrice ] = useState("");
     const currentUser = useCurrentUser();
   
     useEffect(() => {
         const fetchProducts = async () => {
           try {
-            const { data } = await axiosReq.get(`/products/?${filter} search=${query}`);
+            const { data } = await axiosReq.get(`/products/?${filter}search=${query}&price=${price}`);
             setProducts(data);
             setHasLoaded(true);
           } catch (err) {
@@ -40,21 +41,12 @@ function ProductsPage({message, filter=""}) {
         return () => {
           clearTimeout(timer);
         };
-  }, [filter, query, pathname, currentUser]);
+  }, [filter, query, pathname, currentUser, price]);
 
+  const filterPrice = (e)=>{
+    setPrice( e.target.value );
+  }
 
-
-//const filterCategories = [
-//  {Other: 'Other'},
-//  {Beauty: 'Beauty'},
-//  {Home: 'Home & Garden'},
-//  {Toys: 'Toys & Game'},
-//  {Sport: 'Sport & Outdoor'},
-//  {Pet: 'Pet Supply'},
-//  {Books: 'Books'},
-//  {Electronics:'Electronics'},
-//  {Car : 'Car & Motorbike' },
-//];
 
   return (
     <Row className="h-100">
@@ -72,6 +64,15 @@ function ProductsPage({message, filter=""}) {
             className="mr-sm-2"
             placeholder="Search products"
           />
+          <Form.Control
+        type='range'
+        onChange={filterPrice}
+        min={1}
+        max={1000}
+        step={1}
+        value={price}
+        />
+        <h1> Price: {price}</h1>
         </Form>
         {hasLoaded ? (
           <>

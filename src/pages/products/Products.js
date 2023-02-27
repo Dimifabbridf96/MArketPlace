@@ -7,7 +7,7 @@ import Tooltip  from 'react-bootstrap/Tooltip';
 import { Link } from 'react-router-dom';
 import Avatar from '../../components/Avatar';
 import styles from '../../styles/Product.module.css'
-import { axiosReq, axiosRes } from '../../api/axiosDefaults';
+import { axiosRes } from '../../api/axiosDefaults';
 import { MoreDropdown } from '../../components/MoreDropdown';
 import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
 
@@ -40,7 +40,7 @@ const Products = (props) => {
 
     const handleDelete = async() =>{
       try{
-      await axiosRes.delete(`/products/${id}/`)
+      await axiosRes.delete(`/products/${id}`)
       history.goBack()
       }catch(err){
         // console.log(err)
@@ -49,7 +49,7 @@ const Products = (props) => {
     }
     const handleLike = async() => {
         try{
-            const {data} = await axiosReq.post('/likes/', {product: id});
+            const {data} = await axiosRes.post('/likes/', {product: id});
         setProduct((prevProduct) => ({
             ...prevProduct, results: prevProduct.results.map((product) =>{
                 return product.id === id
@@ -96,9 +96,8 @@ const Products = (props) => {
         <Card.Body>
           {title && <Card.Title className="text-center">{title}</Card.Title>}
           {description && <Card.Text>{description}</Card.Text>}
-          {category && <Card.Title className="text-center">{category}</Card.Title>}
           {category && <Card.Text>{category}</Card.Text>}
-          {price && <Card.Text>{price}</Card.Text>}
+          {price && <Card.Text>{price} €</Card.Text>}
           <div>
           {is_owner ? (
             <OverlayTrigger

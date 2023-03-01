@@ -4,7 +4,7 @@ import { axiosRes } from '../../api/axiosDefaults';
 import styles from "../../styles/ReviewCreateEditForm.module.css";
 
 
-const ReviewsEditForm = (props) => {
+function ReviewsEditForm(props){
     const{ id, review, setShowEdit, setReviews} = props;
 
     const [formReview, setFormReview] = useState(review);

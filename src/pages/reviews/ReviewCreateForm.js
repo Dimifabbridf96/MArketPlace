@@ -48,7 +48,7 @@ const ReviewCreateForm = (props) => {
             </Link>
             <Form.Control
             className={styles.Form}
-            placeholder="Insert your Review"
+            placeholder="Insert your Review 1 to 5 "
             type="number"
             min='0'
             max='5'

@@ -18,7 +18,7 @@ const Reviews = (props) => {
         profile_id,
         profile_image,
         setProduct,
-        setReview,
+        setReviews,
         id,
     }= props;
 
@@ -35,8 +35,8 @@ const Reviews = (props) => {
           reviews_count: prevProduct.results[0].reviews_count - 1
         }]
       }))
-        setReview(prevReview => ({
-          ...prevReview, results: prevReview.results.filter((review) => review.id !== id), 
+        setReviews(prevReviews => ({
+          ...prevReviews, results: prevReviews.results.filter((review) => review.id !== id), 
           }))
       }
       catch(err){
@@ -61,7 +61,7 @@ const Reviews = (props) => {
               profile_id={profile_id}
               review={review}
               profileImage={profile_image}
-              setReview={setReview}
+              setReviews={setReviews}
               setShowEdit={setShowEdit}
             />
             ):(<p> { review }/5 🌟</p>)}

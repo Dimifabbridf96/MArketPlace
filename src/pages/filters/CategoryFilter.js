@@ -5,7 +5,6 @@ import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
 import Container from "react-bootstrap/Container";
 import appStyles from "../../App.module.css";
-import styles from "../../styles/ProductsList.module.css";
 import { useLocation } from "react-router-dom/cjs/react-router-dom.min";
 import Products from "../products/Products";
 import NoResults from "../../assets/noResults.jpg";

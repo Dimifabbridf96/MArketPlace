@@ -1,42 +1,38 @@
 .App {
-    font-family: 'Kaushan Script', cursive;
-    min-height: 100vh;
+  font-family: 'Kaushan Script', cursive;
+  min-height: 100vh;
 }
 
-i:hover {
-    color: black;
-    font-size: 150%;
-}
 
 .Padding{
-    padding-top: 100px;
+  padding-top: 100px;
 }
 
 .FillerImage {
-    object-fit: cover;
-    height: 100%;
-    width: 100%;
-  }
+  object-fit: cover;
+  height: 100%;
+  width: 100%;
+}
 
 .Product {
-max-height: 40vh;
-max-width: 100%;
-object-fit: contain;
+  max-height: 40vh;
+  max-width: 100%;
+  object-fit: contain;
 }
 
 .Content {
-    background-color: #ffffff;
-    padding: 10px;
-    border-radius: 2px;
-    border: 1px solid #dadadf;
-  }
+  background-color: #ffffff;
+  padding: 10px;
+  border-radius: 2px;
+  border: 1px solid #dadadf;
+}
 .Review{
-margin-left: 0.5rem;
-float: right;
-max-width: 47%;
+  margin-left: 0.5rem;
+  float: right;
+  max-width: 47%;
 }
 .Comment{
-margin-right: 0.5rem;
-float: left;
-max-width: 47%;
+  margin-right: 0.5rem;
+  float: left;
+  max-width: 47%;
 }

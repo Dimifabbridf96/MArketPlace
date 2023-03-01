@@ -17,6 +17,7 @@ export const ProfileDataProvider = ({children}) =>{
         popularProfiles: {results: []},
         activeProfiles: {results:[]},
       });
+      
       const currentUser = useCurrentUser();
 
 
@@ -71,7 +72,7 @@ export const ProfileDataProvider = ({children}) =>{
       }
     
       useEffect(() => {
-        const HandleMount = async() =>{
+        const handleMount = async() =>{
           try{
             const {data} = await axiosReq.get(`/profiles/?ordering=-followers_count`);
             setProfileData(prevState =>({
@@ -81,7 +82,7 @@ export const ProfileDataProvider = ({children}) =>{
               // console.log(err)
           }
         }
-        HandleMount()
+        handleMount();
       }, [currentUser])
 
       useEffect(() => {

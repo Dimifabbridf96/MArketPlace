@@ -7,10 +7,7 @@
 
 
 
-i:hover {
-    color: black;
-    font-size: 150%;
-}
+
 
 a:hover{
     text-decoration: none;
@@ -30,5 +27,5 @@ a, i{
 }
 
 .Active i {
-    color: #003366
+    color: #0000ff
 }

@@ -3,7 +3,7 @@ import { Form, InputGroup } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import { axiosRes } from '../../api/axiosDefaults';
 import Avatar from '../../components/Avatar';
-import styles from "../../styles/CommentCreateEditForm.module.css";
+import styles from "../../styles/ReviewCreateEditForm.module.css";
 
 
 const ReviewCreateForm = (props) => {

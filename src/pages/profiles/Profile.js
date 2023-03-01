@@ -18,11 +18,11 @@ const Profile = (props) => {
         id,
         following_id,
         image,
-        owner
+        owner,
     }= profile;
 
     const currentUser = useCurrentUser();
-    const is_owner = currentUser?.usename === owner;
+    const is_owner = currentUser?.username === owner;
 
     const {handleFollow, handleUnfollow} = useSetProfileData();
 

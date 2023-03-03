@@ -49,8 +49,8 @@ const history = useHistory()
     }
   };
 
-  const handleSubmit = async(event) => {
-    event.preventDefault();
+  const handleSubmit = async (event) => {
+    event.preventDefault()
     const formData = new FormData();
 
     formData.append("title", title);
@@ -61,7 +61,7 @@ const history = useHistory()
 
     try {
       const { data } = await axiosReq.post("/products/", formData);
-      history.push(`/products/${data.id}`);
+      history.push(`/product/${data.id}`);
     } catch (err) {
       // console.log(err);
       if (err.response?.status !== 401) {
@@ -146,7 +146,8 @@ const history = useHistory()
                   htmlFor="image-upload"
                 >
                   <Asset src={Upload} message='Click here to upload an image' />
-                </Form.Label>)}
+                </Form.Label>
+                )}
               
     <Form.File id="image-upload" accept="image/*" onChange={handleChangeImage} ref={imageInput} />
             </Form.Group>

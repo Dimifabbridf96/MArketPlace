@@ -28,7 +28,7 @@ const Products = (props) => {
         comments_count,
         reviews_count,
         productPage,
-        setProduct
+        setProducts,
     } = props;
 
     const currentUser = useCurrentUser();
@@ -48,11 +48,11 @@ const Products = (props) => {
       }
 
     }
-    const handleLike = async() => {
+    const handleLike = async () => {
         try{
             const {data} = await axiosRes.post('/likes/', {product: id});
-        setProduct((prevProduct) => ({
-            ...prevProduct, results: prevProduct.results.map((product) =>{
+        setProducts((prevProducts) => ({
+            ...prevProducts, results: prevProducts.results.map((product) =>{
                 return product.id === id
                 ? {...product, likes_count: product.likes_count +1, like_id: data.id } : product;
             }),
@@ -65,8 +65,8 @@ const Products = (props) => {
     const handleUnlike = async() =>{
         try{
             await axiosRes.delete(`likes/${like_id}`);
-            setProduct((prevProduct) => ({
-                ...prevProduct, results: prevProduct.results.map((product) =>{
+            setProducts((prevProducts) => ({
+                ...prevProducts, results: prevProducts.results.map((product) =>{
                     return product.id === id
                     ? {...product, likes_count: product.likes_count - 1, like_id: null } : product;
                 }),

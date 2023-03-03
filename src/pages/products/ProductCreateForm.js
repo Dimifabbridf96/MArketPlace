@@ -98,7 +98,7 @@ const history = useHistory()
       ))}
 
    <Form.Group controlId="category">
-       < CategorySelector value={description} onChange={handleChange} />
+       < CategorySelector value={category} onChange={handleChange} />
     </Form.Group>
     
 

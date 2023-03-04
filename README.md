@@ -69,7 +69,19 @@ The user is able also to see only the products liked or from followed user.
 
 - follow other user and see their products - As user I can * follow other user* so that *I can see the new products uploaded *
 
+# Sprints
 
+## 1° sprint
+
+- Create the Navbar
+- Import Router to allow change page without refresh
+- Create page for authentication, registration and wotk on log out functionality
+
+## 2° sprint
+
+- Add creation page form for products
+- Create Page to display the data retrieved from the API added with the form 
+- Implement like and unlike functionality
 
 # Manual Testing
 

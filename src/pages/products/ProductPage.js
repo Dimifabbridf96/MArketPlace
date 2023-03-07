@@ -53,7 +53,7 @@ const [reviews, setReviews] = useState({results: []});
       <Col className="py-2 p-0 p-lg-2" lg={8}>
         <PopularProfiles mobile />
         <ActiveProfiles mobile />
-        <Products {...product.results[0]} setProduct={setProduct} productPage/>
+        <Products {...product.results[0]} setProducts={setProduct} productPage/>
         <Container className={`${appStyles.Content} ${appStyles.Comment}`}>
         {currentUser ? (
           

@@ -30,10 +30,10 @@ const { id } = useParams();
   useEffect(() => {
     const handleMount = async () => {
       try {
-        const { data } = await axiosReq.get(`/posts/${id}/`);
-        const { title, image, is_owner } = data;
+        const { data } = await axiosReq.get(`/products/${id}`);
+        const { title, image, is_owner, description, price, category } = data;
 
-        is_owner ? setProductCreation({ title, image }) : history.push("/");
+        is_owner ? setProductCreation({ title, image, description,price, category }) : history.push("/");
       } catch (err) {
          // console.log(err);
       }
@@ -73,7 +73,7 @@ const { id } = useParams();
 
     try {
       axiosReq.put(`/products/${id}`, formData);
-      history.push(`/products/${id}`);
+      history.push(`/product/${id}`);
     } catch (err) {
       // console.log(err);
       if (err.response?.status !== 401) {

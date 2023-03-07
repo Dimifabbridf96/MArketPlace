@@ -36,7 +36,7 @@ const Products = (props) => {
     const history = useHistory();
 
     const handleEdit = () =>{
-      history.push(`/products/${id}`)
+      history.push(`/product/${id}/edit`)
     }
 
     const handleDelete = async() =>{
